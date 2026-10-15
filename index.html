@@ -390,8 +390,15 @@ function setTheme(t){
   document.documentElement.dataset.theme = t;
   themeBtns.forEach(b=>b.setAttribute("aria-pressed", b.dataset.themeSet===t));
 }
-themeBtns.forEach(b=>b.addEventListener("click",()=>setTheme(b.dataset.themeSet)));
-setTheme(matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+// El tema elegido se recuerda; si no hay elección previa, se sigue el del sistema
+themeBtns.forEach(b=>b.addEventListener("click",()=>{
+  setTheme(b.dataset.themeSet);
+  try{ localStorage.setItem("theme", b.dataset.themeSet); }catch(e){}
+}));
+let initTheme = null;
+try{ initTheme = localStorage.getItem("theme"); }catch(e){}
+if(initTheme!=="light" && initTheme!=="dark") initTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+setTheme(initTheme);
 </script>
 </body>
 </html>
