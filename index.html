@@ -148,7 +148,6 @@ footer{border-top:1px solid var(--divider);padding-top:18px;font:400 12px/1.6 va
         <a class="link" href="https://github.com/leyenda95" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="f" data-t="0">GitHub</span></a>
         <a class="link" href="https://www.linkedin.com/in/alvaro-liebana-carrascosa-898a67254" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M0 1.15C0 .51.53 0 1.18 0h13.64C15.47 0 16 .51 16 1.15v13.7c0 .64-.53 1.15-1.18 1.15H1.18C.53 16 0 15.49 0 14.85V1.15zm4.94 12.25V6.17h-2.4v7.23h2.4zm-1.2-8.21c.84 0 1.36-.56 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .69.52 1.25 1.33 1.25h.01zm4.91 8.21V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.63v3.88h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.28 0-1.85.7-2.17 1.19v.03h-.02l.02-.03V6.17h-2.4c.03.68 0 7.23 0 7.23h2.4z"/></svg><span class="f" data-t="1">LinkedIn</span></a>
         <a class="link" href="mailto:alvaro@tricubo.tech"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></svg><span class="f" data-t="1">alvaro@tricubo.tech</span></a>
-        <span class="f" data-t="2">+34 638 933 777</span>
       </div>
     </div>
     <div class="photo hidden"><img src="foto.webp" width="640" height="675" alt="Foto de Álvaro" data-en-alt="Photo of Álvaro"></div>
@@ -360,7 +359,7 @@ addEventListener("afterprint",()=>render(beforePrint,false));
 const start = ALIAS[location.hash.slice(1)] ?? 0;
 render(0,false);
 if(start) setTimeout(()=>render(start),300);
-// Selector de idioma: ?lang=en en la URL, después la última elección, después el idioma del navegador
+// Selector de idioma: ?lang=es en la URL, después la última elección; por defecto, inglés
 const staticTexts = [...document.querySelectorAll("[data-en]:not(.f)")];
 staticTexts.forEach(el=>{ el.dataset.es = el.textContent; });
 const langBtns = document.querySelectorAll("[data-lang-set]");
@@ -381,8 +380,7 @@ function setLang(l){
 langBtns.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.langSet)));
 let initLang = new URLSearchParams(location.search).get("lang");
 if(!initLang){ try{ initLang = localStorage.getItem("lang"); }catch(e){} }
-if(!initLang) initLang = (navigator.language||"").toLowerCase().startsWith("es") ? "es" : "en";
-setLang(initLang==="en" ? "en" : "es");
+setLang(initLang==="es" ? "es" : "en");
 
 // Selector de tema (temporal)
 const themeBtns = document.querySelectorAll("[data-theme-set]");
