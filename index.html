@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="CV de Álvaro con divulgación selectiva.">
+<title>Álvaro · Currículum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+
+:root{
+  --bg:#f9f9f8; --surface:#ffffff; --ink:#0a0a0b; --muted:#71717a; --faint:#a1a1aa; --line:#d8d8dc; --divider:#c4c4ca;
+  --accent:#6555ce; --god:#c2410c;  --redact:color-mix(in srgb,var(--ink) 15%,transparent); --ph:#7c3aed;
+  --dot:rgba(10,10,11,.10); --shadow:0 1px 2px rgba(0,0,0,.06),0 1px 1px rgba(0,0,0,.04);
+  --f-sans:"Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-serif:"Instrument Serif", "Times New Roman", serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e0e11; --surface:#18181c; --ink:#fafafa; --muted:#a1a1aa; --faint:#71717a; --line:#27272a; --divider:#3a3a41;
+  --accent:#a69ce2; --god:#fb923c;  --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#c4b5fd;
+  --dot:rgba(255,255,255,.09); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e0e11; --surface:#18181c; --ink:#fafafa; --muted:#a1a1aa; --faint:#71717a; --line:#27272a; --divider:#3a3a41;
+  --accent:#a69ce2; --god:#fb923c;  --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#c4b5fd;
+  --dot:rgba(255,255,255,.09); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}
+
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.65 var(--f-sans);-webkit-font-smoothing:antialiased;padding:56px 16px 72px;position:relative}
+/* Trama de puntos que se desvanece bajo la cabecera */
+body::before{content:"";position:absolute;inset:0 0 auto;height:520px;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:20px 20px;-webkit-mask-image:linear-gradient(#000,transparent);mask-image:linear-gradient(#000,transparent);pointer-events:none;z-index:-1}
+::selection{background:color-mix(in srgb,var(--accent) 25%,transparent)}
+.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+
+/* Cabecera */
+header{display:flex;flex-direction:column;gap:22px}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.hero-text{display:flex;flex-direction:column;gap:22px;min-width:0}
+/* Foto: desenfocada en Público, nítida desde Reclutador, con el mismo fundido que los campos */
+.photo{flex:none;width:220px;aspect-ratio:2622/2766;border-radius:28px;overflow:hidden;background:var(--redact);box-shadow:0 0 0 1px var(--line)}
+.photo img{display:block;width:100%;height:100%;object-fit:cover;transition:filter .35s ease-in-out,transform .35s ease-in-out,opacity .35s ease-in-out}
+.photo.hidden img{filter:blur(18px) grayscale(.4);transform:scale(1.15);opacity:.75}
+@media (max-width:720px){.photo{width:170px;border-radius:24px}}
+@media (max-width:560px){.hero{flex-direction:column-reverse;align-items:flex-start}.photo{width:160px;border-radius:22px}}
+@media print{.photo.hidden img{filter:none;transform:none;opacity:1}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 12px/1 var(--f-mono);color:var(--muted)}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+h1{font:600 clamp(40px,7.5vw,64px)/1.1 var(--f-sans);letter-spacing:-.04em;margin:0;text-wrap:balance}
+h1 em{font:300 1em/1.1 var(--f-sans);letter-spacing:-.04em;color:var(--accent)}
+/* En el nombre la barra es algo más baja que la línea, para que no se solape si ocupa dos líneas */
+h1 .f{background:linear-gradient(var(--bar-h1),var(--bar-h1)) center/100% 78% no-repeat;--bar-h1:color-mix(in srgb,var(--redact) calc(var(--o)*100%),transparent)}
+.headline{font-size:18px;line-height:1.5;color:var(--muted);max-width:52ch;margin:0;text-wrap:pretty}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font:400 13px/1.5 var(--f-mono);color:var(--muted)}
+.meta a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
+.meta a:hover{color:var(--accent);text-decoration-color:currentColor}
+a:has(.f.hidden){pointer-events:none;text-decoration-color:transparent} /* oculto: no se puede abrir */
+.meta .link{display:inline-flex;align-items:center;gap:6px}
+.meta .ico{width:14px;height:14px;flex:none;transition:opacity .35s ease-in-out}
+.meta .link:has(.f.hidden) .ico{opacity:.35}
+
+/* Selector: control segmentado */
+.access{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.access-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
+.access-top strong{font:500 12px/1 var(--f-mono);color:var(--ink)}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--ink) 3%,var(--bg))}
+@media (max-width:560px){.tiers{grid-template-columns:minmax(0,1fr)}}
+.tier{appearance:none;font:inherit;color:var(--ink);background:transparent;border:1px solid transparent;border-radius:9px;padding:10px 12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;transition:background .2s,border-color .2s,box-shadow .2s}
+.tier:hover{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.tier:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tier .t{font-weight:600;font-size:14.5px;letter-spacing:-.01em}
+.tier .d{font-size:12.5px;color:var(--muted);line-height:1.35}
+.tier[aria-pressed="true"]{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow)}
+.tier[aria-pressed="true"] .t{color:var(--accent)}
+.tier.god[aria-pressed="true"] .t{color:var(--god)}
+.bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .6s cubic-bezier(.65,0,.35,1),background .3s}
+body.lv2 .bar i{background:var(--god)}
+
+/* Secciones */
+section{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px 32px;border-top:1px solid var(--divider);padding-top:24px}
+@media (max-width:640px){section{grid-template-columns:minmax(0,1fr)}}
+h2{font:500 12px/1.9 var(--f-mono);color:var(--muted);margin:0;counter-increment:sec}
+h2::before{content:counter(sec,decimal-leading-zero) "  ";color:var(--faint);white-space:pre}
+.wrap{counter-reset:sec}
+.sec-body{display:flex;flex-direction:column;gap:22px;min-width:0}
+.item{display:flex;flex-direction:column;gap:6px}
+.item + .item{margin-top:12px}
+.item-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;align-items:baseline}
+.item-head .role{font-size:17px;font-weight:600;letter-spacing:-.015em;line-height:1.35}
+/* La empresa va al lado del puesto, en gris y seminegrita */
+.item-head .org{font-weight:500;color:var(--muted);letter-spacing:-.015em}
+.item-head .org .dot{color:var(--faint)}
+.edu .item-head .role{font-size:15px;letter-spacing:-.01em}
+.certs .item-head .role{font-size:15px;font-weight:500;letter-spacing:-.01em}
+.item-head .when{white-space:nowrap;font:400 12.5px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.proj{font-size:14px;color:var(--muted)}
+.certs{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.certs .sub{font:500 12px/1.6 var(--f-mono);color:var(--muted);margin-bottom:4px}
+ul{margin:2px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+li::marker{color:var(--faint)}
+p{margin:0;max-width:62ch;text-wrap:pretty}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:400 12.5px/1 var(--f-mono);background:color-mix(in srgb,var(--ink) 5%,transparent);border:1px solid color-mix(in srgb,var(--ink) 6%,transparent);padding:7px 9px;border-radius:6px}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 20px;margin:0}
+@media (max-width:480px){.kv{grid-template-columns:minmax(0,1fr);gap:2px}.kv dd{margin-bottom:10px}}
+.kv dt{font:400 12.5px/1.65 var(--f-mono);color:var(--muted)}
+.kv dd{margin:0;min-width:0}
+section.offrecord{border-top-color:color-mix(in srgb,var(--god) 55%,var(--divider))}
+section.offrecord h2{color:var(--god)}
+
+/* Campos. --o es la opacidad de la barra y --t la del texto; al cambiar de modo se cruzan en un fundido */
+@property --o{syntax:"<number>";inherits:true;initial-value:0}
+@property --t{syntax:"<number>";inherits:true;initial-value:1}
+.f{border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+  background:color-mix(in srgb,var(--redact) calc(var(--o)*100%),transparent);
+  color:color-mix(in srgb,currentColor calc(var(--t)*100%),transparent)}
+.f.hidden{--o:1;--t:0;user-select:none;-webkit-user-select:none;cursor:help}
+.ph{color:color-mix(in srgb,var(--ph) calc(var(--t)*100%),transparent);font-family:var(--f-mono);font-size:.9em}
+
+footer{border-top:1px solid var(--divider);padding-top:18px;font:400 12px/1.6 var(--f-mono);color:var(--faint);display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px}
+@media print{body{background:#fff;padding:0}body::before,.access{display:none}}
+
+/* Selectores de idioma y de tema (el de tema es temporal) */
+.theme{position:fixed;top:16px;right:16px;z-index:10;display:flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,var(--surface) 85%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.theme button{appearance:none;font:500 12px/1 var(--f-mono);color:var(--muted);background:transparent;border:0;border-radius:7px;padding:7px 10px;cursor:pointer}
+.theme button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.theme .sep{width:1px;align-self:stretch;margin:4px 3px;background:var(--line)}
+.theme button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media print{.theme{display:none}}
+</style>
+</head>
+<body>
+<div class="theme"><span role="group" aria-label="Idioma / Language" style="display:contents"><button data-lang-set="es">ES</button><button data-lang-set="en">EN</button></span><span class="sep"></span><span role="group" aria-label="Tema" style="display:contents"><button data-theme-set="light" data-en="Light">Claro</button><button data-theme-set="dark" data-en="Dark">Oscuro</button></span></div>
+<div class="wrap">
+<header>
+  <div class="hero">
+    <div class="hero-text">
+      <div class="eyebrow" data-en="Open to new opportunities">Abierto a nuevas oportunidades</div>
+      <h1><span class="f" data-t="0">Álvaro</span> <em><span class="f" data-t="1">Liébana Carrascosa</span></em></h1>
+      <p class="headline"><span class="f" data-t="0" data-en="Product Engineer · Blockchain">Ingeniero de producto · Blockchain</span></p>
+      <div class="meta">
+        <span class="f" data-t="0" data-en="Valencia, Spain">Valencia, España</span>
+        <a class="link" href="https://github.com/leyenda95" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="f" data-t="0">GitHub</span></a>
+        <a class="link" href="https://www.linkedin.com/in/alvaro-liebana-carrascosa-898a67254" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M0 1.15C0 .51.53 0 1.18 0h13.64C15.47 0 16 .51 16 1.15v13.7c0 .64-.53 1.15-1.18 1.15H1.18C.53 16 0 15.49 0 14.85V1.15zm4.94 12.25V6.17h-2.4v7.23h2.4zm-1.2-8.21c.84 0 1.36-.56 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .69.52 1.25 1.33 1.25h.01zm4.91 8.21V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.63v3.88h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.28 0-1.85.7-2.17 1.19v.03h-.02l.02-.03V6.17h-2.4c.03.68 0 7.23 0 7.23h2.4z"/></svg><span class="f" data-t="1">LinkedIn</span></a>
+        <a class="link" href="mailto:alvaro@tricubo.tech"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></svg><span class="f" data-t="1">alvaro@tricubo.tech</span></a>
+        <span class="f" data-t="2">+34 638 933 777</span>
+      </div>
+    </div>
+    <div class="photo hidden"><img src="foto.webp" width="640" height="675" alt="Foto de Álvaro" data-en-alt="Photo of Álvaro"></div>
+  </div>
+
+  <div class="access" aria-label="Qué ver">
+    <div class="access-top">
+      <strong data-en="Choose what to see">Elige qué ver</strong>
+    </div>
+    <div class="tiers" role="group">
+      <button class="tier" data-lv="0" aria-pressed="true"><span class="t" data-en="Public">Público</span><span class="d" data-en="What anyone can see">Lo que cualquiera puede ver</span></button>
+      <button class="tier" data-lv="1" aria-pressed="false"><span class="t" data-en="Recruiter">Reclutador</span><span class="d" data-en="Full experience and contact details">Experiencia completa y contacto</span></button>
+      <button class="tier god" data-lv="2" aria-pressed="false"><span class="t">God</span><span class="d" data-en="Fully declassified">Todo desclasificado</span></button>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+</header>
+
+<section>
+  <h2 data-en="About">Sobre mí</h2>
+  <div class="sec-body">
+    <p><span class="f" data-t="0" data-en="I have always been curious about technology and where it is heading. I came across blockchain ten years ago and it opened up a whole new set of possibilities. I have worked in the space for the last six years, from smart contracts on Ethereum to networks built to get past its limits. My focus now is privacy: how blockchain, combined with technologies like zero-knowledge proofs, can change our relationship with data and give people back control over it. I enjoy working between engineering and product: understanding a problem, shaping it and seeing it through.">Soy un apasionado de la tecnología. Hace diez años descubrí blockchain y se me abrió un nuevo mundo. Desde hace seis trabajo en este ámbito, desde los smart contracts en Ethereum hasta redes diseñadas para superar sus limitaciones. Hoy estoy centrado en la privacidad: exploro cómo blockchain se combina con tecnologías como las pruebas de conocimiento cero para cambiar nuestra relación con los datos y devolver el control a las personas. Me gusta trabajar entre lo técnico y el producto: entender un problema, darle forma y llevarlo hasta el final.</span></p>
+    <p><span class="f" data-t="0" data-en="I use AI every day to research, write and build faster. I believe in it and in the role it can play in almost any process, but not in the way some companies misuse our data to get there.">En mi día a día uso la IA para investigar, redactar y programar más rápido. Creo mucho en ella y en el papel que puede tener en casi cualquier proceso, pero no en el uso abusivo que algunas empresas hacen de nuestra información para conseguirlo.</span></p>
+  </div>
+</section>
+
+<section>
+  <h2 data-en="Experience">Experiencia</h2>
+  <div class="sec-body">
+    <div class="item">
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Co-founder, blockchain lead">Co-fundador, responsable de blockchain</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1">Aegis</span></span></span><span class="when"><span class="f" data-t="1" data-en="05/2026 – present">05/2026 – actualidad</span></span></div>
+      <p class="proj"><span class="f" data-t="0" data-en="Privacy-preserving retail market intelligence platform built on Midnight.">Plataforma de inteligencia de mercado retail con privacidad, construida sobre Midnight.</span></p>
+      <ul>
+        <li><span class="f" data-t="1" data-en="Designed and built the system's privacy layer.">Diseño e implementación de la capa de privacidad del sistema.</span></li>
+        <li><span class="f" data-t="1" data-en="Built private market intelligence with AI agents on aggregated on-chain data.">Construcción de la inteligencia de mercado privada con agentes de IA sobre datos agregados en cadena.</span></li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Funding proposal reviewer">Revisor de propuestas de financiación</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1">Project Catalyst</span></span></span><span class="when"><span class="f" data-t="1">2026</span></span></div>
+      <p class="proj"><span class="f" data-t="0" data-en="Assessed and scored Cardano ecosystem funding proposals against criteria for technical feasibility, budget and impact.">Evaluación y puntuación de propuestas de financiación del ecosistema Cardano según criterios de viabilidad técnica, presupuesto e impacto.</span></p>
+    </div>
+    <div class="item">
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Co-founder and CEO">Co-fundador y CEO</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1">Tricubo Technologies</span></span></span><span class="when"><span class="f" data-t="1" data-en="2023 – present">2023 – actualidad</span></span></div>
+      <p class="proj"><span class="f" data-t="0" data-en="End-to-end encrypted digital purchase receipts on Algorand.">Recibos de compra digitales y cifrados de extremo a extremo sobre Algorand.</span></p>
+      <ul>
+        <li><span class="f" data-t="1" data-en="Set the product vision and roadmap, and lead business development and partnerships.">Defino la visión y el roadmap de producto, y lidero el desarrollo de negocio y las alianzas.</span></li>
+        <li><span class="f" data-t="1" data-en="Blockchain architect, responsible for designing the core system architecture.">Arquitecto blockchain, a cargo del diseño de la arquitectura central del sistema.</span></li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Solutions architect and software engineer">Arquitecto de soluciones e ingeniero de software</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1">Zunibal</span></span></span><span class="when"><span class="f" data-t="1">2021 – 2024</span></span></div>
+      <p class="proj"><span class="f" data-t="0" data-en="Acoustic systems for estimating biomass from satellite buoys.">Sistemas acústicos para estimar biomasa desde boyas satelitales.</span></p>
+      <ul>
+        <li><span class="f" data-t="1" data-en="Designed detection and signal processing algorithms and implemented them on different computing architectures.">Análisis y desarrollo de algoritmos de detección y procesado de señal, e implementación en distintas arquitecturas de computación.</span></li>
+        <li><span class="f" data-t="1" data-en="Built, maintained and repaired marine prototypes: sensors, sensor networks, underwater cameras, instrumentation and marine vehicles.">Montaje, mantenimiento y reparación de prototipos marinos: sensores, redes de sensores, cámaras submarinas, instrumentación y vehículos marinos.</span></li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Systems and signal processing developer">Desarrollador de sistemas y procesado de señal</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1" data-en="Spanish State Research Agency">Agencia Estatal de Investigación</span></span></span><span class="when"><span class="f" data-t="1">2021</span></span></div>
+      <p class="proj"><span class="f" data-t="0" data-en="Acoustic detection and multi-messenger astronomy with neutrino telescopes.">Detección acústica y astronomía multimensajero con telescopios de neutrinos.</span></p>
+      <ul>
+        <li><span class="f" data-t="1" data-en="Developed and operated underwater acoustic detection systems: lab and open-sea calibration of scientific echosounders, signal processing algorithms and maintenance of hydroacoustic equipment.">Desarrollo y operación de sistemas de detección acústica submarina: calibración de ecosondas científicas en laboratorio y mar abierto, algoritmos de procesado de señal y mantenimiento de equipos hidroacústicos.</span></li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="IoT infrastructure engineer">Ingeniero de infraestructura IoT</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1" data-en="Spanish State Research Agency">Agencia Estatal de Investigación</span></span></span><span class="when"><span class="f" data-t="1">2020</span></span></div>
+      <p class="proj"><span class="f" data-t="0" data-en="Software-defined cognitive network to optimize and secure IoT traffic.">Red cognitiva definida por software para optimizar y asegurar el tráfico IoT.</span></p>
+      <ul>
+        <li><span class="f" data-t="1" data-en="Testbed setup, multi-vendor network configuration, network measurement and analysis, big data management and technical documentation.">Preparación del banco de pruebas, configuración de equipos de red de varios fabricantes, medidas y análisis de red, gestión de Big Data y documentación técnica.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Stack</h2>
+  <div class="sec-body">
+    <div class="chips">
+      <span class="chip"><span class="f" data-t="0">Compact</span></span>
+      <span class="chip"><span class="f" data-t="0">Solidity</span></span>
+      <span class="chip"><span class="f" data-t="0">Midnight.js</span></span>
+      <span class="chip"><span class="f" data-t="0">Algorand</span></span>
+      <span class="chip"><span class="f" data-t="0">TypeScript / JavaScript</span></span>
+      <span class="chip"><span class="f" data-t="0">Java</span></span>
+      <span class="chip"><span class="f" data-t="0">Python</span></span>
+      <span class="chip"><span class="f" data-t="0">C/C++</span></span>
+      <span class="chip"><span class="f" data-t="0">HTML/CSS</span></span>
+      <span class="chip"><span class="f" data-t="0">Node.js</span></span>
+      <span class="chip"><span class="f" data-t="0">React</span></span>
+      <span class="chip"><span class="f" data-t="0">React Native</span></span>
+      <span class="chip"><span class="f" data-t="0">Docker</span></span>
+    </div>
+    <dl class="kv">
+      <dt><span class="f" data-t="0" data-en="Tools">Herramientas</span></dt><dd><span class="f" data-t="0">GitHub, Jira, Notion, ClickUp</span></dd>
+      <dt><span class="f" data-t="1" data-en="Learning">Aprendiendo</span></dt><dd><span class="f" data-t="1">Go</span></dd>
+    </dl>
+  </div>
+</section>
+
+<section class="edu">
+  <h2 data-en="Education">Formación</h2>
+  <div class="sec-body">
+    <div class="item">
+      <div class="item-head"><span class="role"><span class="f" data-t="1" data-en="Master&#x27;s in Technologies, Systems and Networks · UPV">Máster en Tecnologías, Sistemas y Redes · UPV</span></span><span class="when"><span class="f" data-t="1">2019 – 2020</span></span></div>
+    </div>
+    <div class="item">
+      <div class="item-head"><span class="role"><span class="f" data-t="1" data-en="Telecommunications Engineering · Universitat Politècnica de València">Ingeniería de Telecomunicación · Universitat Politècnica de València</span></span><span class="when"><span class="f" data-t="1">2015 – 2019</span></span></div>
+    </div>
+    <div class="certs">
+      <span class="sub" data-en="Certifications and community">Certificaciones y comunidad</span>
+      <div class="item-head"><span class="role"><span class="f" data-t="1">Midnight Scholar · Midnight Academy</span></span><span class="when"><span class="f" data-t="1">2025</span></span></div>
+      <div class="item-head"><span class="role"><span class="f" data-t="1">Cardano Blockchain Certified Associate · Cardano Academy</span></span><span class="when"><span class="f" data-t="1">2025</span></span></div>
+      <div class="item-head"><span class="role"><span class="f" data-t="1" data-en="Midnight Ambassador (Charlie)">Embajador de Midnight (Charlie)</span></span></div>
+    </div>
+    <div class="certs">
+      <span class="sub" data-en="Languages">Idiomas</span>
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="English">Inglés</span></span><span class="when"><span class="f" data-t="0" data-en="Professional">Profesional</span></span></div>
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Spanish">Español</span></span><span class="when"><span class="f" data-t="0" data-en="Native">Nativo</span></span></div>
+      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Valencian">Valenciano</span></span><span class="when"><span class="f" data-t="0" data-en="Native">Nativo</span></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="offrecord">
+  <h2 data-en="Between us">En confianza</h2>
+  <div class="sec-body">
+    <dl class="kv">
+      <dt><span class="f" data-t="2" data-en="Outside work">Fuera del trabajo</span></dt><dd><span class="f" data-t="2" data-en="Football, films and time with friends.">Fútbol, cine, quedar con los amigos.</span></dd>
+      <dt><span class="f" data-t="2" data-en="What drives me">Me mueve</span></dt><dd><span class="f" data-t="2" data-en="Building things that are useful to people.">Crear algo útil para la gente y contribuir al mundo.</span></dd>
+      <dt><span class="f" data-t="2" data-en="Looking for">Busco</span></dt><dd><span class="f" data-t="2" data-en="A place to put what I know to use and keep learning. There is always something new.">Aportar lo que sé y seguir aprendiendo. Siempre hay algo nuevo.</span></dd>
+      <dt><span class="f" data-t="2" data-en="Why here">Por qué aquí</span></dt><dd><span class="f" data-t="2" data-en="We share the same values and way of seeing things.">Compartimos valores y forma de ver las cosas.</span></dd>
+      <dt><span class="f" data-t="2" data-en="Availability">Disponibilidad</span></dt><dd><span class="f" data-t="2" data-en="Looking forward to getting started.">¡Estoy deseando empezar!</span></dd>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <span><span class="f" data-t="0">Álvaro</span> <span class="f" data-t="1">Liébana Carrascosa</span> · 2026</span>
+</footer>
+</div>
+
+<script>
+const LEVELS = [{id:"publico"},{id:"reclutador"},{id:"god"}];
+const NAMES = {es:["Público","Reclutador","God"], en:["Public","Recruiter","God"]};
+const HIDDEN = {es:n=>`Oculto · se divulga en «${n}»`, en:n=>`Hidden · visible in ${n}`};
+const TITLE = {es:"Álvaro · Currículum", en:"Álvaro · CV"};
+let lang = "es";
+const ALIAS = {publico:0, reclutador:1, god:2, godmode:2};
+const fields = [...document.querySelectorAll(".f")];
+let level = 0;
+fields.forEach(el=>{ el._es = el._text = el.textContent; el._t = +el.dataset.t; });
+
+const markPh = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\[[^\]]*\]/g, m=>`<span class="ph">${m}</span>`);
+fields.forEach(el=>{ el.innerHTML = markPh(el._text); });
+
+// Fundido cruzado: la barra y el texto se desvanecen a la vez, uno entra mientras el otro sale
+const canFade = !!(window.CSS && CSS.registerProperty) && typeof Element.prototype.animate==="function";
+const DUR = 350, EASE = "ease-in-out";
+const REVEAL = [{"--o":"1","--t":"0",easing:EASE},{"--o":"0","--t":"1"}];
+const COVER  = [{"--o":"0","--t":"1",easing:EASE},{"--o":"1","--t":"0"}];
+function fade(el, frames, delay, done){
+  if(el._anim) el._anim.cancel(); // un clic nuevo interrumpe el fundido anterior
+  const a = el._anim = el.animate(frames,{duration:DUR,delay,fill:"both"});
+  a.onfinish = ()=>{ done(); a.cancel(); el._anim = null; };
+}
+function settle(el, hidden){
+  if(el._anim){ el._anim.cancel(); el._anim = null; }
+  el.classList.toggle("hidden", hidden);
+}
+
+function show(el, animate, delay=0){
+  el.removeAttribute("aria-hidden"); el.removeAttribute("title");
+  if(!animate || !canFade) return settle(el,false);
+  el.classList.remove("hidden");
+  fade(el, REVEAL, delay, ()=>{});
+}
+function hide(el, animate, delay=0){
+  el.setAttribute("aria-hidden","true");
+  el.title = HIDDEN[lang](NAMES[lang][el._t]);
+  if(!animate || !canFade) return settle(el,true);
+  fade(el, COVER, delay, ()=>el.classList.add("hidden"));
+}
+
+function render(next, animate=true){
+  const prev = level; level = next;
+  fields.forEach(el=>{
+    const vis = el._t<=level, was = el._t<=prev;
+    if(!animate){ vis ? show(el,false) : hide(el,false); return; }
+    if(vis && !was) show(el, true);
+    else if(!vis && was) hide(el, true);
+  });
+  document.querySelectorAll(".tier").forEach(b=>b.setAttribute("aria-pressed", +b.dataset.lv===level));
+  document.body.classList.toggle("lv2", level===2);
+  const photo = document.querySelector(".photo"); if(photo) photo.classList.toggle("hidden", level<1);
+  const shown = fields.filter(f=>f._t<=level).length;
+  document.getElementById("bar").style.width = (shown/fields.length*100)+"%";
+  try{ history.replaceState(null,"", level ? "#"+LEVELS[level].id : location.pathname+location.search); }catch(e){}
+}
+
+document.querySelectorAll(".tier").forEach(b=>b.addEventListener("click",()=>render(+b.dataset.lv)));
+addEventListener("hashchange",()=>{ const lv = ALIAS[location.hash.slice(1)]; if(lv!==undefined && lv!==level) render(lv); });
+
+// Al imprimir se muestra todo
+let beforePrint = 0;
+addEventListener("beforeprint",()=>{ beforePrint = level; render(2,false); });
+addEventListener("afterprint",()=>render(beforePrint,false));
+
+// Enlace directo a un nivel: #reclutador o #god
+const start = ALIAS[location.hash.slice(1)] ?? 0;
+render(0,false);
+if(start) setTimeout(()=>render(start),300);
+// Selector de idioma: ?lang=en en la URL, después la última elección, después el idioma del navegador
+const staticTexts = [...document.querySelectorAll("[data-en]:not(.f)")];
+staticTexts.forEach(el=>{ el.dataset.es = el.textContent; });
+const langBtns = document.querySelectorAll("[data-lang-set]");
+function setLang(l){
+  lang = l;
+  document.documentElement.lang = l;
+  document.title = TITLE[l];
+  fields.forEach(el=>{
+    el._text = (l==="en" && el.dataset.en) || el._es;
+    el.innerHTML = markPh(el._text);
+    if(el.hasAttribute("aria-hidden")) el.title = HIDDEN[l](NAMES[l][el._t]);
+  });
+  staticTexts.forEach(el=>{ el.textContent = l==="en" ? el.dataset.en : el.dataset.es; });
+  const img = document.querySelector(".photo img"); if(img){ img.dataset.esAlt ??= img.alt; img.alt = l==="en" ? img.dataset.enAlt : img.dataset.esAlt; }
+  langBtns.forEach(b=>b.setAttribute("aria-pressed", b.dataset.langSet===l));
+  try{ localStorage.setItem("lang", l); }catch(e){}
+}
+langBtns.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.langSet)));
+let initLang = new URLSearchParams(location.search).get("lang");
+if(!initLang){ try{ initLang = localStorage.getItem("lang"); }catch(e){} }
+if(!initLang) initLang = (navigator.language||"").toLowerCase().startsWith("es") ? "es" : "en";
+setLang(initLang==="en" ? "en" : "es");
+
+// Selector de tema (temporal)
+const themeBtns = document.querySelectorAll("[data-theme-set]");
+function setTheme(t){
+  document.documentElement.dataset.theme = t;
+  themeBtns.forEach(b=>b.setAttribute("aria-pressed", b.dataset.themeSet===t));
+}
+themeBtns.forEach(b=>b.addEventListener("click",()=>setTheme(b.dataset.themeSet)));
+setTheme(matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+</script>
+</body>
+</html>
