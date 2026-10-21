@@ -1,0 +1,22 @@
+/* Estilos comunes del CV y del blog: reset, colores de los modos claro y oscuro, tipografías */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+:root{
+  --bg:#f9f9f8; --surface:#ffffff; --ink:#0a0a0b; --muted:#71717a; --faint:#a1a1aa; --line:#d8d8dc; --divider:#c4c4ca;
+  --accent:#6555ce; --god:#c2410c;  --redact:color-mix(in srgb,var(--ink) 15%,transparent); --ph:#7c3aed;
+  --dot:rgba(10,10,11,.10); --shadow:0 1px 2px rgba(0,0,0,.06),0 1px 1px rgba(0,0,0,.04);
+  --f-sans:"Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-serif:"Instrument Serif", "Times New Roman", serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e0e11; --surface:#18181c; --ink:#fafafa; --muted:#a1a1aa; --faint:#71717a; --line:#27272a; --divider:#3a3a41;
+  --accent:#a69ce2; --god:#fb923c;  --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#c4b5fd;
+  --dot:rgba(255,255,255,.09); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e0e11; --surface:#18181c; --ink:#fafafa; --muted:#a1a1aa; --faint:#71717a; --line:#27272a; --divider:#3a3a41;
+  --accent:#a69ce2; --god:#fb923c;  --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#c4b5fd;
+  --dot:rgba(255,255,255,.09); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}
+::selection{background:color-mix(in srgb,var(--accent) 25%,transparent)}

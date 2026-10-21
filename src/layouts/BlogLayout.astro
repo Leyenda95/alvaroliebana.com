@@ -1,0 +1,112 @@
+---
+// Plantilla común del blog. Los colores y modos claro/oscuro vienen de src/styles/tokens.css, igual que el CV.
+import '../styles/tokens.css';
+interface Props {
+  title: string;
+  description?: string;
+  lang: 'en' | 'es';
+  altHref: string; // la misma página en el otro idioma
+}
+const { title, description = '', lang, altHref } = Astro.props;
+const t = {
+  en: { cv: 'CV', blog: 'Blog', light: 'Light', dark: 'Dark' },
+  es: { cv: 'CV', blog: 'Blog', light: 'Claro', dark: 'Oscuro' },
+}[lang];
+const blogHref = lang === 'es' ? '/es/blog' : '/blog';
+const cvHref = lang === 'es' ? '/?lang=es' : '/?lang=en';
+const enHref = lang === 'en' ? Astro.url.pathname : altHref;
+const esHref = lang === 'es' ? Astro.url.pathname : altHref;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="alternate" hreflang={lang === 'en' ? 'es' : 'en'} href={altHref} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" />
+  <!-- Aplica el tema guardado antes de pintar, para que no parpadee -->
+  <script is:inline>
+    try {
+      const th = localStorage.getItem('theme');
+      if (th === 'light' || th === 'dark') document.documentElement.dataset.theme = th;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="ctrl">
+    <span role="group" aria-label="Language">
+      <a href={esHref} data-lang="es" aria-current={lang === 'es' ? 'true' : undefined}>ES</a>
+      <a href={enHref} data-lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+    </span>
+    <span class="sep"></span>
+    <span role="group" aria-label="Theme">
+      <button data-theme-set="light">{t.light}</button>
+      <button data-theme-set="dark">{t.dark}</button>
+    </span>
+  </div>
+
+  <div class="wrap">
+    <header class="top">
+      <a class="name" href={cvHref}>Álvaro <em>Liébana</em></a>
+      <nav>
+        <a href={cvHref}>{t.cv}</a>
+        <a href={blogHref} aria-current="page">{t.blog}</a>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer>Álvaro Liébana Carrascosa · {new Date().getFullYear()}</footer>
+  </div>
+
+  <script is:inline>
+    // Idioma: se recuerda igual que en el CV
+    document.querySelectorAll('[data-lang]').forEach((a) =>
+      a.addEventListener('click', () => {
+        try { localStorage.setItem('lang', a.dataset.lang); } catch (e) {}
+      })
+    );
+    // Tema: se recuerda; si no hay elección, sigue al sistema
+    const btns = document.querySelectorAll('[data-theme-set]');
+    const current = () =>
+      document.documentElement.dataset.theme ||
+      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const mark = () => btns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.themeSet === current()));
+    btns.forEach((b) =>
+      b.addEventListener('click', () => {
+        document.documentElement.dataset.theme = b.dataset.themeSet;
+        try { localStorage.setItem('theme', b.dataset.themeSet); } catch (e) {}
+        mark();
+      })
+    );
+    mark();
+  </script>
+</body>
+</html>
+
+<style is:global>
+  body { margin:0; background:var(--bg); color:var(--ink); font:400 16px/1.7 var(--f-sans); -webkit-font-smoothing:antialiased; padding:56px 16px 72px; position:relative; }
+  body::before { content:""; position:absolute; inset:0 0 auto; height:420px; background-image:radial-gradient(var(--dot) 1px,transparent 1px); background-size:20px 20px; -webkit-mask-image:linear-gradient(#000,transparent); mask-image:linear-gradient(#000,transparent); pointer-events:none; z-index:-1; }
+  a { color:inherit; }
+  .wrap { max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:48px; }
+
+  /* Cabecera */
+  .top { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px; padding-bottom:18px; border-bottom:1px solid var(--divider); }
+  .top .name { font:600 22px/1.2 var(--f-sans); letter-spacing:-.03em; text-decoration:none; }
+  .top .name em { font-style:normal; font-weight:300; color:var(--accent); }
+  .top nav { display:flex; gap:18px; font:500 13px/1 var(--f-mono); }
+  .top nav a { color:var(--muted); text-decoration:none; }
+  .top nav a:hover, .top nav a[aria-current="page"] { color:var(--ink); }
+
+  /* Selectores de idioma y tema, como en el CV */
+  .ctrl { position:fixed; top:16px; right:16px; z-index:10; display:flex; align-items:center; gap:2px; padding:3px; border:1px solid var(--line); border-radius:10px; background:color-mix(in srgb,var(--surface) 85%,transparent); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .ctrl > span[role] { display:contents; }
+  .ctrl a, .ctrl button { appearance:none; font:500 12px/1 var(--f-mono); color:var(--muted); background:transparent; border:0; border-radius:7px; padding:7px 10px; cursor:pointer; text-decoration:none; }
+  .ctrl a[aria-current="true"], .ctrl button[aria-pressed="true"] { background:var(--surface); color:var(--ink); box-shadow:var(--shadow); }
+  .ctrl .sep { width:1px; align-self:stretch; margin:4px 3px; background:var(--line); }
+  @media (max-width:560px) { .ctrl { position:absolute; } }
+
+  footer { border-top:1px solid var(--divider); padding-top:18px; font:400 12px/1.6 var(--f-mono); color:var(--faint); }
+</style>

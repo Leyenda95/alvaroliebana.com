@@ -1,3 +1,8 @@
+---
+// CV interactivo: misma página que antes (public/index.html), ahora generada por Astro.
+// El HTML y el script son los de siempre; los colores y modos vienen de src/styles/tokens.css.
+import '../styles/tokens.css';
+---
 <!doctype html>
 <html lang="es">
 <head>
@@ -8,33 +13,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
-<style>
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-[hidden]{display:none!important}
+<style is:global>
 
-:root{
-  --bg:#f9f9f8; --surface:#ffffff; --ink:#0a0a0b; --muted:#71717a; --faint:#a1a1aa; --line:#d8d8dc; --divider:#c4c4ca;
-  --accent:#6555ce; --god:#c2410c;  --redact:color-mix(in srgb,var(--ink) 15%,transparent); --ph:#7c3aed;
-  --dot:rgba(10,10,11,.10); --shadow:0 1px 2px rgba(0,0,0,.06),0 1px 1px rgba(0,0,0,.04);
-  --f-sans:"Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-mono:"Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --f-serif:"Instrument Serif", "Times New Roman", serif;
-  color-scheme:light;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0e0e11; --surface:#18181c; --ink:#fafafa; --muted:#a1a1aa; --faint:#71717a; --line:#27272a; --divider:#3a3a41;
-  --accent:#a69ce2; --god:#fb923c;  --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#c4b5fd;
-  --dot:rgba(255,255,255,.09); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0e0e11; --surface:#18181c; --ink:#fafafa; --muted:#a1a1aa; --faint:#71717a; --line:#27272a; --divider:#3a3a41;
-  --accent:#a69ce2; --god:#fb923c;  --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#c4b5fd;
-  --dot:rgba(255,255,255,.09); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}
 
 body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.65 var(--f-sans);-webkit-font-smoothing:antialiased;padding:56px 16px 72px;position:relative}
 /* Trama de puntos que se desvanece bajo la cabecera */
 body::before{content:"";position:absolute;inset:0 0 auto;height:520px;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:20px 20px;-webkit-mask-image:linear-gradient(#000,transparent);mask-image:linear-gradient(#000,transparent);pointer-events:none;z-index:-1}
-::selection{background:color-mix(in srgb,var(--accent) 25%,transparent)}
 .wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
 
 /* Cabecera */
@@ -150,6 +134,7 @@ footer{border-top:1px solid var(--divider);padding-top:18px;font:400 12px/1.6 va
         <a class="link" href="https://github.com/leyenda95" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="f" data-t="0">GitHub</span></a>
         <a class="link" href="https://www.linkedin.com/in/alvaro-liebana-carrascosa-898a67254" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M0 1.15C0 .51.53 0 1.18 0h13.64C15.47 0 16 .51 16 1.15v13.7c0 .64-.53 1.15-1.18 1.15H1.18C.53 16 0 15.49 0 14.85V1.15zm4.94 12.25V6.17h-2.4v7.23h2.4zm-1.2-8.21c.84 0 1.36-.56 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .69.52 1.25 1.33 1.25h.01zm4.91 8.21V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.63v3.88h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.28 0-1.85.7-2.17 1.19v.03h-.02l.02-.03V6.17h-2.4c.03.68 0 7.23 0 7.23h2.4z"/></svg><span class="f" data-t="1">LinkedIn</span></a>
         <a class="link" href="mailto:alvaro@tricubo.tech"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></svg><span class="f" data-t="1">alvaro@tricubo.tech</span></a>
+        <a class="link" id="blogLink" href="/blog"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></g></svg><span>Blog</span></a>
       </div>
     </div>
     <div class="photo hidden"><img src="foto.webp" width="900" height="949" alt="Foto de Álvaro" data-en-alt="Photo of Álvaro"></div>
@@ -291,7 +276,7 @@ footer{border-top:1px solid var(--divider);padding-top:18px;font:400 12px/1.6 va
 </footer>
 </div>
 
-<script>
+<script is:inline>
 const LEVELS = [{id:"publico"},{id:"reclutador"},{id:"god"}];
 const NAMES = {es:["Público","Reclutador","God"], en:["Public","Recruiter","God"]};
 const HIDDEN = {es:n=>`Oculto · se divulga en «${n}»`, en:n=>`Hidden · visible in ${n}`};
@@ -377,6 +362,7 @@ function setLang(l){
   staticTexts.forEach(el=>{ el.textContent = l==="en" ? el.dataset.en : el.dataset.es; });
   const img = document.querySelector(".photo img"); if(img){ img.dataset.esAlt ??= img.alt; img.alt = l==="en" ? img.dataset.enAlt : img.dataset.esAlt; }
   langBtns.forEach(b=>b.setAttribute("aria-pressed", b.dataset.langSet===l));
+  const blogLink = document.getElementById("blogLink"); if(blogLink) blogLink.href = l==="es" ? "/es/blog" : "/blog";
   try{ localStorage.setItem("lang", l); }catch(e){}
 }
 langBtns.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.langSet)));

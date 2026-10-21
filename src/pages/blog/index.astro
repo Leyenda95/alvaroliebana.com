@@ -1,0 +1,10 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import PostList from '../../layouts/PostList.astro';
+
+// Cada archivo .md de esta carpeta es un artículo en inglés
+const posts = Object.values(import.meta.glob('./*.md', { eager: true })) as any[];
+---
+<BlogLayout title="Blog · Álvaro Liébana" description="Notes on privacy, blockchain and building products." lang="en" altHref="/es/blog">
+  <PostList posts={posts} lang="en" />
+</BlogLayout>
