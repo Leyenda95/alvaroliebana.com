@@ -37,6 +37,10 @@ const backHref = lang === 'es' ? '/es/blog' : '/blog';
   .prose :global(code) { font:400 .9em var(--f-mono); background:color-mix(in srgb,var(--ink) 6%,transparent); padding:2px 5px; border-radius:4px; }
   .prose :global(pre) { font:400 13px/1.6 var(--f-mono); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px 16px; overflow-x:auto; }
   .prose :global(pre code) { background:none; padding:0; }
+  /* Colores del resaltado de código según el tema */
+  .prose :global(.astro-code span) { color:var(--shiki-light); }
+  @media (prefers-color-scheme: dark) { :global(:root:not([data-theme="light"])) .prose :global(.astro-code span) { color:var(--shiki-dark); } }
+  :global(:root[data-theme="dark"]) .prose :global(.astro-code span) { color:var(--shiki-dark); }
   .prose :global(img) { max-width:100%; border-radius:8px; }
   .prose :global(table) { width:100%; border-collapse:collapse; margin:1.4em 0; font-size:14.5px; display:block; overflow-x:auto; }
   .prose :global(th), .prose :global(td) { text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top; }

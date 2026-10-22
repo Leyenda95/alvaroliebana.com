@@ -5,4 +5,11 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://alvaroliebana.com',
   trailingSlash: 'ignore',
+  // Los bloques de código siguen el tema claro u oscuro de la web (ver PostLayout.astro)
+  markdown: {
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: false,
+    },
+  },
 });
