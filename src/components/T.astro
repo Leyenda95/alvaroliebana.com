@@ -1,0 +1,5 @@
+---
+// Texto bilingüe: español en el HTML e inglés en data-en, como en el CV. Lo cambia LandingLayout.
+const { t, as: Tag = 'span', ...rest } = Astro.props;
+---
+<Tag data-en={t[1]} {...rest}>{t[0]}</Tag>

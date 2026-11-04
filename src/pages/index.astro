@@ -1,398 +1,467 @@
 ---
-// CV interactivo: misma página que antes (public/index.html), ahora generada por Astro.
-// El HTML y el script son los de siempre; los colores y modos vienen de src/styles/tokens.css.
-import '../styles/tokens.css';
+// Página de presentación: cálida y juguetona, con paleta propia sacada de las fotos
+// (azul cobalto del escenario y ocre de la madera).
+import LandingLayout from '../layouts/LandingLayout.astro';
+import T from '../components/T.astro';
+import CvMenu from '../components/CvMenu.astro';
+import { about, blog, contact, hero, links, nav, path, posts, work } from '../data/landing.js';
+
+const logos = [
+  { name: 'Aegis', src: '/img/logos/aegis.webp', href: 'https://aegis-midnight.vercel.app/' },
+  { name: 'Gaia', src: '/img/logos/gaia.webp', href: 'https://tricubo.tech/gaia' },
+  { name: 'SnowPDF', src: '/img/logos/snowpdf.webp', href: 'https://github.com/Leyenda95/snowpdf' },
+  { name: 'Project Catalyst', src: '/img/logos/catalyst.svg', href: 'https://projectcatalyst.io/' },
+];
+const fonts = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap';
+const ticker = ['Midnight', 'Compact', 'Zero-knowledge', 'Algorand', 'Cardano', 'Solidity', 'Notion', 'TypeScript', 'Python', 'C/C++', 'Node.js', 'ClickUp', 'React', 'React Native', 'Docker', 'GitHub'];
+const icons = {
+  cap: '<path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11.5V16c2 2.2 10 2.2 12 0v-4.5"/>',
+  net: '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5V12m0 0-5.5 5M12 12l5.5 5"/>',
+  wave: '<path d="M2 12h3l2-6 3 13 3-16 3 12 2-3h4"/>',
+  buoy: '<path d="M12 3v5M8 8h8l2 8H6z"/><path d="M3 19.5c2 0 2 1.5 4.5 1.5S10 19.5 12 19.5s2 1.5 4.5 1.5 2.5-1.5 4.5-1.5"/>',
+  receipt: '<path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 21z"/><path d="M9 8h6M9 12h6"/>',
+  check: '<path d="M6 3h12v18H6z"/><path d="m9 12 2 2 4-4"/>',
+  shield: '<path d="m12 3 8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+};
 ---
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="CV de Álvaro con divulgación selectiva.">
-<title>Álvaro · Currículum</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
-<style is:global>
-
-
-body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.65 var(--f-sans);-webkit-font-smoothing:antialiased;padding:56px 16px 72px;position:relative}
-/* Trama de puntos que se desvanece bajo la cabecera */
-body::before{content:"";position:absolute;inset:0 0 auto;height:520px;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:20px 20px;-webkit-mask-image:linear-gradient(#000,transparent);mask-image:linear-gradient(#000,transparent);pointer-events:none;z-index:-1}
-.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
-
-/* Cabecera */
-header{display:flex;flex-direction:column;gap:22px}
-.hero{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.hero-text{display:flex;flex-direction:column;gap:22px;min-width:0}
-/* Foto: desenfocada en Público, nítida desde Reclutador, con el mismo fundido que los campos */
-.photo{flex:none;width:220px;aspect-ratio:2622/2766;border-radius:28px;overflow:hidden;background:var(--redact);box-shadow:0 0 0 1px var(--line)}
-.photo img{display:block;width:100%;height:100%;object-fit:cover;transition:filter .35s ease-in-out,transform .35s ease-in-out,opacity .35s ease-in-out}
-.photo.hidden img{filter:blur(18px) grayscale(.4);transform:scale(1.15);opacity:.75}
-@media (max-width:720px){.photo{width:170px;border-radius:24px}}
-@media (max-width:560px){.hero{flex-direction:column-reverse;align-items:flex-start}.photo{width:160px;border-radius:22px}}
-@media print{.photo.hidden img{filter:none;transform:none;opacity:1}}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 12px/1 var(--f-mono);color:var(--muted)}
-.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
-h1{font:600 clamp(40px,7.5vw,64px)/1.1 var(--f-sans);letter-spacing:-.04em;margin:0;text-wrap:balance}
-h1 em{font:300 1em/1.1 var(--f-sans);letter-spacing:-.04em;color:var(--accent)}
-/* En el nombre la barra es algo más baja que la línea, para que no se solape si ocupa dos líneas */
-h1 .f{background:linear-gradient(var(--bar-h1),var(--bar-h1)) center/100% 78% no-repeat;--bar-h1:color-mix(in srgb,var(--redact) calc(var(--o)*100%),transparent)}
-.headline{font-size:18px;line-height:1.5;color:var(--muted);max-width:52ch;margin:0;text-wrap:pretty}
-.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font:400 13px/1.5 var(--f-mono);color:var(--muted)}
-.meta a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
-.meta a:hover{color:var(--accent);text-decoration-color:currentColor}
-a:has(.f.hidden){pointer-events:none;text-decoration-color:transparent} /* oculto: no se puede abrir */
-.meta .link{display:inline-flex;align-items:center;gap:6px}
-.meta .ico{width:14px;height:14px;flex:none;transition:opacity .35s ease-in-out}
-.meta .link:has(.f.hidden) .ico{opacity:.35}
-
-/* Selector: control segmentado */
-.access{display:flex;flex-direction:column;gap:12px;margin-top:8px}
-.access-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
-.access-top strong{font:500 12px/1 var(--f-mono);color:var(--ink)}
-.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--ink) 3%,var(--bg))}
-@media (max-width:560px){.tiers{grid-template-columns:minmax(0,1fr)}}
-.tier{appearance:none;font:inherit;color:var(--ink);background:transparent;border:1px solid transparent;border-radius:9px;padding:10px 12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;transition:background .2s,border-color .2s,box-shadow .2s}
-.tier:hover{background:color-mix(in srgb,var(--ink) 4%,transparent)}
-.tier:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.tier .t{font-weight:600;font-size:14.5px;letter-spacing:-.01em}
-.tier .d{font-size:12.5px;color:var(--muted);line-height:1.35}
-.tier[aria-pressed="true"]{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow)}
-.tier[aria-pressed="true"] .t{color:var(--accent)}
-.tier.god[aria-pressed="true"] .t{color:var(--god)}
-.bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .6s cubic-bezier(.65,0,.35,1),background .3s}
-body.lv2 .bar i{background:var(--god)}
-
-/* Secciones */
-section{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px 32px;border-top:1px solid var(--divider);padding-top:24px}
-@media (max-width:640px){section{grid-template-columns:minmax(0,1fr)}}
-h2{font:500 12px/1.9 var(--f-mono);color:var(--muted);margin:0;counter-increment:sec}
-h2::before{content:counter(sec,decimal-leading-zero) "  ";color:var(--faint);white-space:pre}
-.wrap{counter-reset:sec}
-.sec-body{display:flex;flex-direction:column;gap:22px;min-width:0}
-.item{display:flex;flex-direction:column;gap:6px}
-.item + .item{margin-top:12px}
-.item-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;align-items:baseline}
-.item-head .role{font-size:17px;font-weight:600;letter-spacing:-.015em;line-height:1.35}
-/* La empresa va al lado del puesto, en gris y seminegrita */
-.item-head .org{font-weight:500;color:var(--muted);letter-spacing:-.015em}
-.item-head .org .dot{color:var(--faint)}
-.edu .item-head .role{font-size:15px;letter-spacing:-.01em}
-.certs .item-head .role{font-size:15px;font-weight:500;letter-spacing:-.01em}
-.item-head .when{white-space:nowrap;font:400 12.5px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
-.proj{font-size:14px;color:var(--muted)}
-.proj .tlink{color:var(--accent);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 35%,transparent);text-underline-offset:3px;white-space:nowrap}
-.proj .tlink:hover{text-decoration-color:currentColor}
-.certs{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-.certs .sub{font:500 12px/1.6 var(--f-mono);color:var(--muted);margin-bottom:4px}
-ul{margin:2px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
-li::marker{color:var(--faint)}
-p{margin:0;max-width:62ch;text-wrap:pretty}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{font:400 12.5px/1 var(--f-mono);background:color-mix(in srgb,var(--ink) 5%,transparent);border:1px solid color-mix(in srgb,var(--ink) 6%,transparent);padding:7px 9px;border-radius:6px}
-.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 20px;margin:0}
-@media (max-width:480px){.kv{grid-template-columns:minmax(0,1fr);gap:2px}.kv dd{margin-bottom:10px}}
-.kv dt{font:400 12.5px/1.65 var(--f-mono);color:var(--muted)}
-.kv dd{margin:0;min-width:0}
-section.offrecord{border-top-color:color-mix(in srgb,var(--god) 55%,var(--divider))}
-section.offrecord h2{color:var(--god)}
-
-/* Campos. --o es la opacidad de la barra y --t la del texto; al cambiar de modo se cruzan en un fundido */
-@property --o{syntax:"<number>";inherits:true;initial-value:0}
-@property --t{syntax:"<number>";inherits:true;initial-value:1}
-.f{border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;
-  background:color-mix(in srgb,var(--redact) calc(var(--o)*100%),transparent);
-  color:color-mix(in srgb,currentColor calc(var(--t)*100%),transparent)}
-.f.hidden{--o:1;--t:0;user-select:none;-webkit-user-select:none;cursor:help}
-.ph{color:color-mix(in srgb,var(--ph) calc(var(--t)*100%),transparent);font-family:var(--f-mono);font-size:.9em}
-
-footer{border-top:1px solid var(--divider);padding-top:18px;font:400 12px/1.6 var(--f-mono);color:var(--faint);display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px}
-@media print{body{background:#fff;padding:0}body::before,.access{display:none}}
-
-/* Selectores de idioma y de tema (el de tema es temporal) */
-.theme{position:fixed;top:16px;right:16px;z-index:10;display:flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,var(--surface) 85%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.theme button{appearance:none;font:500 12px/1 var(--f-mono);color:var(--muted);background:transparent;border:0;border-radius:7px;padding:7px 10px;cursor:pointer}
-.theme button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
-.theme .sep{width:1px;align-self:stretch;margin:4px 3px;background:var(--line)}
-.theme button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-@media print{.theme{display:none}}
-</style>
-</head>
-<body>
-<div class="theme"><span role="group" aria-label="Idioma / Language" style="display:contents"><button data-lang-set="es">ES</button><button data-lang-set="en">EN</button></span><span class="sep"></span><span role="group" aria-label="Tema" style="display:contents"><button data-theme-set="light" data-en="Light">Claro</button><button data-theme-set="dark" data-en="Dark">Oscuro</button></span></div>
-<div class="wrap">
-<header>
-  <div class="hero">
-    <div class="hero-text">
-      <div class="eyebrow" data-en="Open to new opportunities">Abierto a nuevas oportunidades</div>
-      <h1><span class="f" data-t="0">Álvaro</span> <em><span class="f" data-t="1">Liébana Carrascosa</span></em></h1>
-      <p class="headline"><span class="f" data-t="0" data-en="Product Engineer · Blockchain">Ingeniero de producto · Blockchain</span></p>
-      <div class="meta">
-        <span class="f" data-t="0" data-en="Valencia, Spain">Valencia, España</span>
-        <a class="link" href="https://github.com/leyenda95" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="f" data-t="0">GitHub</span></a>
-        <a class="link" href="https://www.linkedin.com/in/alvaro-liebana-carrascosa-898a67254" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M0 1.15C0 .51.53 0 1.18 0h13.64C15.47 0 16 .51 16 1.15v13.7c0 .64-.53 1.15-1.18 1.15H1.18C.53 16 0 15.49 0 14.85V1.15zm4.94 12.25V6.17h-2.4v7.23h2.4zm-1.2-8.21c.84 0 1.36-.56 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .69.52 1.25 1.33 1.25h.01zm4.91 8.21V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.63v3.88h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.28 0-1.85.7-2.17 1.19v.03h-.02l.02-.03V6.17h-2.4c.03.68 0 7.23 0 7.23h2.4z"/></svg><span class="f" data-t="1">LinkedIn</span></a>
-        <a class="link" href="mailto:alvaro@tricubo.tech"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></svg><span class="f" data-t="1">alvaro@tricubo.tech</span></a>
-        <a class="link" id="blogLink" href="/blog"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></g></svg><span>Blog</span></a>
+<LandingLayout fonts={fonts}>
+  <header class="hero">
+    <nav class="top wrap">
+      <a class="logo" href="/">Álvaro Liébana</a>
+      <div class="navlinks">{nav.map((n) => <a href={n.href}><T t={n.label} /></a>)}</div>
+    </nav>
+    <div class="hero-grid wrap">
+      <div>
+        <T class="sticker" t={hero.status} />
+        <h1 data-en="Hi, I’m Álvaro.">Hola, soy Álvaro.</h1>
+        <T as="p" class="role" t={hero.role} />
+        <T as="p" class="intro" t={hero.intro} />
+        <div class="cta">
+          <a class="btn solid" href="#work"><T t={hero.seeWork} /></a>
+          <CvMenu class="btn-menu" />
+          <a class="btn" href="#contact"><T t={hero.contact} /></a>
+        </div>
       </div>
+      <figure class="hero-photo">
+        <img src="/img/talk-cutout.webp" width="810" height="1212" alt="Álvaro dando una charla" data-en-alt="Álvaro giving a talk" />
+        {logos.map((l) => <a class="badge" href={l.href} target="_blank" rel="noopener" title={l.name}><img src={l.src} alt={l.name} /></a>)}
+      </figure>
     </div>
-    <div class="photo hidden"><img src="foto.webp" width="900" height="949" alt="Foto de Álvaro" data-en-alt="Photo of Álvaro"></div>
-  </div>
-
-  <div class="access" aria-label="Qué ver">
-    <div class="access-top">
-      <strong data-en="Choose what to see">Elige qué ver</strong>
+    <div class="ticker" aria-hidden="true">
+      <div>{[...ticker, ...ticker].map((x) => <span>{x}</span>)}</div>
     </div>
-    <div class="tiers" role="group">
-      <button class="tier" data-lv="0" aria-pressed="true"><span class="t" data-en="Public">Público</span><span class="d" data-en="What anyone can see">Lo que cualquiera puede ver</span></button>
-      <button class="tier" data-lv="1" aria-pressed="false"><span class="t" data-en="Recruiter">Reclutador</span><span class="d" data-en="Full experience and contact details">Experiencia completa y contacto</span></button>
-      <button class="tier god" data-lv="2" aria-pressed="false"><span class="t">God</span><span class="d" data-en="Fully declassified">Todo desclasificado</span></button>
-    </div>
-    <div class="bar"><i id="bar"></i></div>
-  </div>
-</header>
+  </header>
 
-<section>
-  <h2 data-en="About">Sobre mí</h2>
-  <div class="sec-body">
-    <p><span class="f" data-t="0" data-en="I have always been curious about technology and where it is heading. I came across blockchain ten years ago and it opened up a whole new set of possibilities. I have worked in the space for the last six years, from smart contracts on Ethereum to networks built to get past its limits. My focus now is privacy: how blockchain, combined with technologies like zero-knowledge proofs, can change our relationship with data and give people back control over it. I enjoy working between engineering and product: understanding a problem, shaping it and seeing it through.">Soy un apasionado de la tecnología. Hace diez años descubrí blockchain y se me abrió un nuevo mundo. Desde hace seis trabajo en este ámbito, desde los smart contracts en Ethereum hasta redes diseñadas para superar sus limitaciones. Hoy estoy centrado en la privacidad: exploro cómo blockchain se combina con tecnologías como las pruebas de conocimiento cero para cambiar nuestra relación con los datos y devolver el control a las personas. Me gusta trabajar entre lo técnico y el producto: entender un problema, darle forma y llevarlo hasta el final.</span></p>
-    <p><span class="f" data-t="0" data-en="I use AI every day to be more productive when researching, writing and building. I believe in its potential for almost any process, but not in exchange for some companies misusing our data.">En mi día a día uso la IA para ser más productivo al investigar, redactar y programar. Creo en su potencial para casi cualquier proceso, pero no a cambio de que algunas empresas abusen de nuestros datos.</span></p>
-  </div>
-</section>
-
-<section>
-  <h2 data-en="Experience">Experiencia</h2>
-  <div class="sec-body">
-    <div class="item">
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Co-founder, blockchain lead">Co-fundador, responsable de blockchain</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1">Aegis</span></span></span><span class="when"><span class="f" data-t="1" data-en="05/2026 – present">05/2026 – actualidad</span></span></div>
-      <p class="proj"><span class="f" data-t="0" data-en="Privacy-preserving retail market intelligence platform built on Midnight.">Plataforma de inteligencia de mercado retail con privacidad, construida sobre Midnight.</span> <a class="tlink" href="https://www.youtube.com/watch?v=7Mptwj129NQ" target="_blank" rel="noopener"><span class="f" data-t="1" data-en="Watch the trailer ↗">Ver el tráiler ↗</span></a></p>
-      <ul>
-        <li><span class="f" data-t="1" data-en="Designed and built the privacy layer in Compact: each purchase is proven with zero-knowledge proofs.">Diseño e implementación de la capa de privacidad en Compact: cada compra se demuestra con pruebas de conocimiento cero.</span></li>
-        <li><span class="f" data-t="1" data-en="AI agents that turn the aggregated signals into market analysis and recommendations for each shop.">Agentes de IA que convierten las señales agregadas en análisis de mercado y recomendaciones para cada tienda.</span></li>
-        <li><span class="f" data-t="1" data-en="Product focus: small retailers compete blind against the big chains and shoppers do not want to be tracked. Aegis gives each shop collective market intelligence without sacrificing anyone&#x27;s privacy.">Enfoque de producto: el pequeño comercio compite a ciegas frente a las grandes cadenas y el comprador no quiere ser rastreado. Aegis da a cada tienda inteligencia de mercado colectiva sin sacrificar la privacidad de nadie.</span></li>
+  <main>
+    <section id="about" class="wrap about">
+      <div>
+        <T as="h2" t={about.title} />
+        {about.paragraphs.map((p) => <T as="p" t={p} />)}
+      </div>
+      <img src="/img/stage-gesture.webp" width="1400" height="933" loading="lazy" alt="Álvaro explicando una diapositiva en un escenario" data-en-alt="Álvaro explaining a slide on stage" />
+      <ul class="pillars">
+        {about.pillars.map((p) => (
+          <li><T as="h3" t={p.title} /><T as="p" t={p.text} /></li>
+        ))}
       </ul>
-    </div>
-    <div class="item">
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Funding proposal reviewer">Revisor de propuestas de financiación</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1">Project Catalyst</span></span></span><span class="when"><span class="f" data-t="1">2026</span></span></div>
-      <ul>
-        <li><span class="f" data-t="1" data-en="Assessed Cardano ecosystem funding proposals against criteria for technical feasibility, budget and impact.">Evaluación de propuestas de financiación del ecosistema Cardano según criterios de viabilidad técnica, presupuesto e impacto.</span></li>
-        <li><span class="f" data-t="1" data-en="Wrote the reasoning behind each assessment so that proposers and voters can act on it.">Redacción del razonamiento de cada evaluación para que proponentes y votantes puedan actuar a partir de él.</span></li>
+    </section>
+
+    <section id="work" class="wrap">
+      <T as="h2" t={work.title} />
+      <div class="cards">
+        {work.items.map((w) => (
+          <article class="card">
+            <div class="card-top"><h3>{w.name}</h3><span class="when">{w.when}</span></div>
+            <T as="p" class="card-role" t={w.role} />
+            <T as="p" t={w.text} />
+            <div class="tags">{w.tags.map((t) => (Array.isArray(t) ? <T t={t} /> : <span>{t}</span>))}</div>
+            {w.link && <a class="more" href={w.link.href} target="_blank" rel="noopener"><T t={w.link.label} /> ↗</a>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="path" class="path">
+      <div class="wrap">
+        <T as="h2" t={path.title} />
+        <T as="p" class="path-sub" t={path.sub} />
+        <div class="route" id="route">
+          <svg class="route-line" aria-hidden="true"><path class="road" /><path class="trail" /></svg>
+          <ol>
+            {path.items.map((p) => (
+              <li class="stage">
+                <span class="stop"><svg viewBox="0 0 24 24" aria-hidden="true"><Fragment set:html={icons[p.icon]} /></svg></span>
+                <article class="stage-card">
+                  {Array.isArray(p.when) ? <T class="stage-when" t={p.when} /> : <span class="stage-when">{p.when}</span>}
+                  <T as="h3" t={p.org} />
+                  <T as="p" class="stage-role" t={p.role} />
+                  <T as="p" t={p.text} />
+                </article>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <a class="path-more" href="/cv"><T t={path.more} /> →</a>
+      </div>
+      <script is:inline>
+        // Camino de la trayectoria: une las paradas con una curva y la pinta según se hace scroll
+        (() => {
+          const route = document.getElementById('route');
+          const svg = route.querySelector('.route-line');
+          const [road, trail] = svg.querySelectorAll('path');
+          const stops = [...route.querySelectorAll('.stop')];
+          let points = [], lengths = [], total = 0, queued = false;
+          let at = -1, goal = -1, anim = null; // parada actual, parada a la que hay que llegar y tramo en curso
+          const lengthAt = (i) => (i < 0 ? 0 : lengths[i]);
+          const setDrawn = (len) => { trail.style.strokeDashoffset = total - len; };
+
+          function arrive(stop) {
+            stop.classList.remove('flash');
+            void stop.offsetWidth; // reinicia el destello si ya se había visto
+            stop.classList.add('passed', 'flash');
+          }
+          // Recorre un tramo cada vez; si faltan varios, los encadena más deprisa
+          function step() {
+            if (anim || at === goal) return;
+            const up = goal < at;
+            const next = up ? at - 1 : at + 1;
+            const left = Math.abs(goal - at);
+            if (up) stops[at].classList.remove('passed', 'flash');
+            // Al bajar, el tramo acaba en el borde del círculo: lo que queda va oculto debajo
+            const edge = up ? lengthAt(next) : Math.max(lengthAt(at), lengthAt(next) - stops[next].offsetWidth / 2);
+            const from = total - lengthAt(at), to = total - edge;
+            const duration = from === to ? 0 : Math.max(up ? 200 : 500, (up ? 600 : 1600) / left);
+            anim = trail.animate({ strokeDashoffset: [`${from}px`, `${to}px`] }, { duration, easing: up ? 'ease-in-out' : 'cubic-bezier(.35,0,.75,.75)' });
+            anim.onfinish = () => {
+              anim = null;
+              at = next;
+              setDrawn(lengthAt(at));
+              if (!up) arrive(stops[at]);
+              step();
+            };
+          }
+          function paint() {
+            queued = false;
+            const target = innerHeight * 0.65 - route.getBoundingClientRect().top; // hasta dónde debe llegar el camino
+            goal = points.reduce((last, p, i) => (p.y <= target ? i : last), -1);
+            step();
+          }
+          function draw() {
+            if (anim) { anim.onfinish = null; anim.cancel(); anim = null; }
+            const box = route.getBoundingClientRect();
+            points = stops.map((s) => {
+              const r = s.getBoundingClientRect();
+              return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
+            });
+            const parts = points.map((p, i) => {
+              if (!i) return `M${p.x} ${p.y}`;
+              const q = points[i - 1], mid = (q.y + p.y) / 2;
+              return `C${q.x} ${mid} ${p.x} ${mid} ${p.x} ${p.y}`;
+            });
+            // Longitud de la curva hasta cada parada
+            lengths = parts.map((_, i) => {
+              trail.setAttribute('d', parts.slice(0, i + 1).join(''));
+              return trail.getTotalLength();
+            });
+            const d = parts.join('');
+            svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+            road.setAttribute('d', d);
+            trail.setAttribute('d', d);
+            total = trail.getTotalLength();
+            trail.style.strokeDasharray = total;
+            setDrawn(lengthAt(at));
+            paint();
+          }
+          addEventListener('scroll', () => {
+            if (!queued) { queued = true; requestAnimationFrame(paint); }
+          }, { passive: true });
+          new ResizeObserver(draw).observe(route); // cubre el cambio de idioma y la carga de fuentes
+        })();
+      </script>
+    </section>
+
+    <section id="blog" class="wrap">
+      <div class="head-row">
+        <T as="h2" t={blog.title} />
+        <a class="more" href="/blog" data-href-es="/es/blog" data-href-en="/blog"><T t={blog.all} /> →</a>
+      </div>
+      <T as="p" class="blog-sub" t={blog.sub} />
+      <ul class="posts">
+        {posts.slice(0, 4).map((p) => (
+          <li>
+            <a href={`/blog/${p.slug}`} data-href-es={`/es/blog/${p.slug}`} data-href-en={`/blog/${p.slug}`}>
+              <T class="p-title" t={p.title} />
+              <time>{p.date}</time>
+            </a>
+          </li>
+        ))}
       </ul>
-    </div>
-    <div class="item">
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Blockchain architect">Arquitecto blockchain</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1">Tricubo Technologies</span></span></span><span class="when"><span class="f" data-t="1">2023 – 2026</span></span></div>
-      <p class="proj"><span class="f" data-t="0" data-en="Blockchain products for retail: private receipts and rewards.">Productos blockchain para retail: recibos privados y recompensas.</span></p>
-      <ul>
-        <li><span class="f" data-t="1" data-en="Designed the receipt flow: the shop issues each receipt at the moment of purchase and it reaches the customer&#x27;s phone end-to-end encrypted on Algorand, readable only by the customer and the shop.">Diseño del flujo de recibos: la tienda emite cada recibo en el momento de la compra y este llega al móvil del cliente cifrado de extremo a extremo sobre Algorand, legible solo por el cliente y la tienda.</span></li>
-        <li><span class="f" data-t="1" data-en="Shopify integration to extend the same flow to e-commerce.">Integración con Shopify para extender el mismo flujo al comercio electrónico.</span></li>
-        <li><span class="f" data-t="1" data-en="Product vision and roadmap, business development and partnerships, taking the product from idea to delivery.">Visión y roadmap de producto, desarrollo de negocio y alianzas, llevando el producto de la idea a la entrega.</span></li>
-      </ul>
-    </div>
-    <div class="item">
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Solutions architect and software engineer">Arquitecto de soluciones e ingeniero de software</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1">Zunibal</span></span></span><span class="when"><span class="f" data-t="1">2021 – 2024</span></span></div>
-      <p class="proj"><span class="f" data-t="0" data-en="Acoustic systems for estimating biomass from satellite buoys.">Sistemas acústicos para estimar biomasa desde boyas satelitales.</span></p>
-      <ul>
-        <li><span class="f" data-t="1" data-en="Designed detection and signal processing algorithms and implemented them on different computing architectures.">Análisis y desarrollo de algoritmos de detección y procesado de señal, e implementación en distintas arquitecturas de computación.</span></li>
-        <li><span class="f" data-t="1" data-en="Built, maintained and repaired marine prototypes: sensors, sensor networks, underwater cameras, instrumentation and marine vehicles.">Montaje, mantenimiento y reparación de prototipos marinos: sensores, redes de sensores, cámaras submarinas, instrumentación y vehículos marinos.</span></li>
-      </ul>
-    </div>
-    <div class="item">
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Systems and signal processing developer">Desarrollador de sistemas y procesado de señal</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1" data-en="Spanish State Research Agency">Agencia Estatal de Investigación</span></span></span><span class="when"><span class="f" data-t="1">2021</span></span></div>
-      <p class="proj"><span class="f" data-t="0" data-en="Acoustic detection and multi-messenger astronomy with neutrino telescopes.">Detección acústica y astronomía multimensajero con telescopios de neutrinos.</span></p>
-      <ul>
-        <li><span class="f" data-t="1" data-en="Developed and operated underwater acoustic detection systems: lab and open-sea calibration of scientific echosounders, signal processing algorithms and maintenance of hydroacoustic equipment.">Desarrollo y operación de sistemas de detección acústica submarina: calibración de ecosondas científicas en laboratorio y mar abierto, algoritmos de procesado de señal y mantenimiento de equipos hidroacústicos.</span></li>
-      </ul>
-    </div>
-    <div class="item">
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="IoT infrastructure engineer">Ingeniero de infraestructura IoT</span><span class="org"><span class="dot"> · </span><span class="f" data-t="1" data-en="Spanish State Research Agency">Agencia Estatal de Investigación</span></span></span><span class="when"><span class="f" data-t="1">2020</span></span></div>
-      <p class="proj"><span class="f" data-t="0" data-en="Software-defined cognitive network to optimize and secure IoT traffic.">Red cognitiva definida por software para optimizar y asegurar el tráfico IoT.</span></p>
-      <ul>
-        <li><span class="f" data-t="1" data-en="Testbed setup, multi-vendor network configuration, network measurement and analysis, big data management and technical documentation.">Preparación del banco de pruebas, configuración de equipos de red de varios fabricantes, medidas y análisis de red, gestión de Big Data y documentación técnica.</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section>
-  <h2>Stack</h2>
-  <div class="sec-body">
-    <div class="chips">
-      <span class="chip"><span class="f" data-t="0">Compact</span></span>
-      <span class="chip"><span class="f" data-t="0">Solidity</span></span>
-      <span class="chip"><span class="f" data-t="0">Midnight.js</span></span>
-      <span class="chip"><span class="f" data-t="0">Algorand</span></span>
-      <span class="chip"><span class="f" data-t="0">Cardano</span></span>
-      <span class="chip"><span class="f" data-t="0">TypeScript / JavaScript</span></span>
-      <span class="chip"><span class="f" data-t="0">Java</span></span>
-      <span class="chip"><span class="f" data-t="0">Python</span></span>
-      <span class="chip"><span class="f" data-t="0">C/C++</span></span>
-      <span class="chip"><span class="f" data-t="0">HTML/CSS</span></span>
-      <span class="chip"><span class="f" data-t="0">Node.js</span></span>
-      <span class="chip"><span class="f" data-t="0">React</span></span>
-      <span class="chip"><span class="f" data-t="0">React Native</span></span>
-      <span class="chip"><span class="f" data-t="0">Docker</span></span>
-    </div>
-    <dl class="kv">
-      <dt><span class="f" data-t="0" data-en="Cryptography">Criptografía</span></dt><dd><span class="f" data-t="0" data-en="Zero-knowledge proofs, selective disclosure and end-to-end encryption.">Pruebas de conocimiento cero, divulgación selectiva y cifrado de extremo a extremo.</span></dd>
-      <dt><span class="f" data-t="0" data-en="AI">IA</span></dt><dd><span class="f" data-t="0" data-en="AI agents in the development workflow, with the code validated by tests and CI quality gates (coverage thresholds, mutation testing).">Agentes de IA en el flujo de desarrollo, con el código validado por tests y quality gates en CI (umbrales de cobertura, mutation testing).</span></dd>
-      <dt><span class="f" data-t="0" data-en="Tools">Herramientas</span></dt><dd><span class="f" data-t="0">GitHub, Notion, ClickUp</span></dd>
-      <dt><span class="f" data-t="0" data-en="Learning">Aprendiendo</span></dt><dd><span class="f" data-t="0">Go</span></dd>
-    </dl>
-  </div>
-</section>
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <T as="h2" t={contact.title} />
+        <T as="p" t={contact.text} />
+        <a class="mail" href={`mailto:${links.email}`}>{links.email}</a>
+        <div class="socials">
+          <a href={links.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href={links.github} target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<section class="edu">
-  <h2 data-en="Education">Formación</h2>
-  <div class="sec-body">
-    <div class="item">
-      <div class="item-head"><span class="role"><span class="f" data-t="1" data-en="Master&#x27;s in Technologies, Systems and Networks · UPV">Máster en Tecnologías, Sistemas y Redes · UPV</span></span><span class="when"><span class="f" data-t="1">2019 – 2020</span></span></div>
-    </div>
-    <div class="item">
-      <div class="item-head"><span class="role"><span class="f" data-t="1" data-en="Telecommunications Engineering · Universitat Politècnica de València">Ingeniería de Telecomunicación · Universitat Politècnica de València</span></span><span class="when"><span class="f" data-t="1">2015 – 2019</span></span></div>
-    </div>
-    <div class="certs">
-      <span class="sub" data-en="Certifications and community">Certificaciones y comunidad</span>
-      <div class="item-head"><span class="role"><span class="f" data-t="1">Midnight Scholar · Midnight Academy</span></span><span class="when"><span class="f" data-t="1">2025</span></span></div>
-      <div class="item-head"><span class="role"><span class="f" data-t="1">Cardano Blockchain Certified Associate · Cardano Academy</span></span><span class="when"><span class="f" data-t="1">2025</span></span></div>
-      <div class="item-head"><span class="role"><span class="f" data-t="1" data-en="Midnight Ambassador (Charlie)">Embajador de Midnight (Charlie)</span></span></div>
-    </div>
-    <div class="certs">
-      <span class="sub" data-en="Languages">Idiomas</span>
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="English">Inglés</span></span><span class="when"><span class="f" data-t="0" data-en="Professional">Profesional</span></span></div>
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Spanish">Español</span></span><span class="when"><span class="f" data-t="0" data-en="Native">Nativo</span></span></div>
-      <div class="item-head"><span class="role"><span class="f" data-t="0" data-en="Catalan">Valenciano</span></span><span class="when"><span class="f" data-t="0" data-en="Native">Nativo</span></span></div>
-    </div>
-  </div>
-</section>
+  <footer class="wrap">Álvaro Liébana Carrascosa · {new Date().getFullYear()}</footer>
+</LandingLayout>
 
-<section class="offrecord">
-  <h2 data-en="Between us">En confianza</h2>
-  <div class="sec-body">
-    <dl class="kv">
-      <dt><span class="f" data-t="2" data-en="Outside work">Fuera del trabajo</span></dt><dd><span class="f" data-t="2" data-en="Football, films and travelling.">Fútbol, cine y viajar.</span></dd>
-      <dt><span class="f" data-t="2" data-en="What drives me">Me mueve</span></dt><dd><span class="f" data-t="2" data-en="Building things that are useful to people.">Crear algo útil para la gente y contribuir al mundo.</span></dd>
-      <dt><span class="f" data-t="2" data-en="Looking for">Busco</span></dt><dd><span class="f" data-t="2" data-en="A place to put what I know to use and keep learning. There is always something new.">Aportar lo que sé y seguir aprendiendo. Siempre hay algo nuevo.</span></dd>
-      <dt><span class="f" data-t="2" data-en="Why here">Por qué aquí</span></dt><dd><span class="f" data-t="2" data-en="We share the same values and way of seeing things.">Compartimos valores y forma de ver las cosas.</span></dd>
-      <dt><span class="f" data-t="2" data-en="Availability">Disponibilidad</span></dt><dd><span class="f" data-t="2" data-en="Looking forward to getting started.">¡Estoy deseando empezar!</span></dd>
-    </dl>
-  </div>
-</section>
+<style is:global>
+  body {
+    --cobalt:#123f9c; --cobalt-deep:#0c2c70; --ochre:#e8b04a; --paper:#f7f1e5; --card:#fffdf8; --leaf:#2f6b4f; --rust:#c9562c; --night:#10204a;
+    /* Colores de los selectores comunes */
+    --surface:#fffdf8; --ink:var(--night); --muted:#55608a; --line:#d9cfb9; --accent:var(--cobalt); --shadow:0 1px 2px rgba(0,0,0,.12); color-scheme:light;
+    /* Desplegable del CV */
+    --menu-bg:var(--card); --menu-ink:var(--night); --menu-border:2px solid var(--night); --menu-radius:14px; --menu-shadow:5px 5px 0 var(--night); --menu-hover:color-mix(in srgb,var(--ochre) 35%,transparent);
+    margin:0; background:var(--paper); color:var(--night); font:400 17px/1.65 "Instrument Sans", system-ui, sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .wrap { width:min(1120px, 100% - 40px); margin-inline:auto; }
+  a { color:inherit; }
+  h1, h2, h3 { font-family:"Bricolage Grotesque", system-ui, sans-serif; letter-spacing:-.025em; margin:0; }
+  h2 { font-size:clamp(36px, 5.5vw, 60px); font-weight:800; line-height:1.05; margin-bottom:28px; }
+  section.wrap { padding-block:clamp(56px, 8vw, 96px); scroll-margin-top:16px; }
+  :focus-visible { outline:3px solid var(--rust); outline-offset:2px; }
 
-<footer>
-  <span><span class="f" data-t="0">Álvaro</span> <span class="f" data-t="1">Liébana Carrascosa</span> · 2026</span>
-</footer>
-</div>
+  /* Portada */
+  .hero { background:var(--cobalt); color:#fff; }
+  .top { display:flex; flex-wrap:wrap; align-items:center; gap:12px 28px; padding-block:22px; padding-right:130px; }
+  .logo { font:700 19px/1 "Bricolage Grotesque", sans-serif; text-decoration:none; }
+  .navlinks { display:flex; flex-wrap:wrap; gap:6px 18px; font-size:15px; }
+  .navlinks a { text-decoration:none; opacity:.85; }
+  .navlinks a:hover { opacity:1; text-decoration:underline; text-decoration-color:var(--ochre); text-decoration-thickness:2px; text-underline-offset:4px; }
+  .hero-grid { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr); gap:48px; align-items:center; padding-block:clamp(28px, 5vw, 64px) clamp(48px, 6vw, 80px); }
+  .sticker { display:inline-block; background:var(--ochre); color:var(--night); font-weight:600; font-size:14px; padding:6px 14px; border-radius:999px; transform:rotate(-2deg); }
+  h1 { font-size:clamp(56px, 10vw, 118px); font-weight:800; line-height:.98; margin:20px 0 18px; }
+  .role { font:600 clamp(19px, 2.2vw, 24px)/1.3 "Bricolage Grotesque", sans-serif; color:var(--ochre); margin:0 0 14px; }
+  .intro { max-width:54ch; margin:0 0 28px; font-size:18px; }
+  .cta { display:flex; flex-wrap:wrap; gap:12px; }
+  .btn, .btn-menu summary { display:inline-flex; align-items:center; font:600 16px/1 "Instrument Sans", sans-serif; padding:14px 22px; border-radius:999px; border:2px solid #fff; color:#fff; text-decoration:none; background:transparent; transition:transform .16s ease, box-shadow .16s ease; }
+  .btn.solid { background:var(--ochre); border-color:var(--ochre); color:var(--night); }
+  .btn:hover, .btn-menu summary:hover { transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--cobalt-deep); }
+  .ticker { border-top:2px solid rgba(255,255,255,.25); background:var(--cobalt-deep); overflow:hidden; padding-block:12px; }
+  .ticker > div { display:flex; width:max-content; animation:slide 48s linear infinite; font:500 14px/1 "Geist Mono", monospace; }
+  .ticker span { padding-inline:22px; white-space:nowrap; }
+  .ticker span::after { content:"✦"; margin-left:44px; color:var(--ochre); }
+  .ticker:hover > div { animation-play-state:paused; }
+  @keyframes slide { to { transform:translateX(-50%); } }
+  @media (max-width:820px) { .hero-grid { grid-template-columns:minmax(0,1fr); } .top { padding-right:0; padding-top:64px; } }
 
-<script is:inline>
-const LEVELS = [{id:"publico"},{id:"reclutador"},{id:"god"}];
-const NAMES = {es:["Público","Reclutador","God"], en:["Public","Recruiter","God"]};
-const HIDDEN = {es:n=>`Oculto · se divulga en «${n}»`, en:n=>`Hidden · visible in ${n}`};
-const TITLE = {es:"Álvaro · Currículum", en:"Álvaro · CV"};
-let lang = "es";
-const ALIAS = {publico:0, reclutador:1, god:2, godmode:2};
-const fields = [...document.querySelectorAll(".f")];
-let level = 0;
-fields.forEach(el=>{ el._es = el._text = el.textContent; el._t = +el.dataset.t; });
+  /* Sobre mí */
+  .about { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px 56px; align-items:center; }
+  .about p { margin:0 0 16px; max-width:60ch; }
+  .about > img { display:block; width:100%; height:auto; border-radius:22px; border:3px solid var(--night); box-shadow:10px 10px 0 var(--leaf); transform:rotate(-1.2deg); }
+  .pillars { grid-column:1 / -1; list-style:none; margin:16px 0 0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px; }
+  .pillars li { padding:22px; border-radius:20px; border:2px solid var(--night); }
+  .pillars li:nth-child(1) { background:var(--ochre); transform:rotate(-.8deg); }
+  .pillars li:nth-child(2) { background:#bcd7c6; transform:rotate(.6deg); }
+  .pillars li:nth-child(3) { background:#f1b99f; transform:rotate(-.4deg); }
+  .pillars h3 { font-size:24px; font-weight:800; margin-bottom:6px; }
+  .pillars p { margin:0; font-size:16px; line-height:1.5; }
+  @media (max-width:820px) { .about, .pillars { grid-template-columns:minmax(0,1fr); } }
 
-const markPh = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\[[^\]]*\]/g, m=>`<span class="ph">${m}</span>`);
-fields.forEach(el=>{ el.innerHTML = markPh(el._text); });
+  /* Proyectos */
+  .cards { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:22px; align-items:start; }
+  .card { background:var(--card); border:2px solid var(--night); border-radius:20px; padding:24px; box-shadow:7px 7px 0 var(--cobalt); transition:transform .18s ease, box-shadow .18s ease; display:flex; flex-direction:column; gap:10px; }
+  .card:nth-child(2) { box-shadow:7px 7px 0 var(--rust); margin-top:28px; }
+  .card:nth-child(3) { box-shadow:7px 7px 0 var(--leaf); margin-top:56px; }
+  .card:hover { transform:translate(-2px,-3px) rotate(-.6deg); }
+  .card-top { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .card h3 { font-size:30px; font-weight:800; line-height:1.1; }
+  .when { font:500 13px/1 "Geist Mono", monospace; color:var(--muted); white-space:nowrap; }
+  .card p { margin:0; font-size:16px; line-height:1.55; }
+  .card .card-role { font-weight:600; }
+  .tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .tags span { font:500 12.5px/1 "Geist Mono", monospace; padding:6px 9px; border-radius:999px; background:color-mix(in srgb,var(--ochre) 30%,transparent); }
+  .more { font-weight:600; text-decoration-color:var(--rust); text-decoration-thickness:2px; text-underline-offset:4px; }
+  @media (max-width:820px) { .cards { grid-template-columns:minmax(0,1fr); } .card:nth-child(n) { margin-top:0; } }
 
-// Fundido cruzado: la barra y el texto se desvanecen a la vez, uno entra mientras el otro sale
-const canFade = !!(window.CSS && CSS.registerProperty) && typeof Element.prototype.animate==="function";
-const DUR = 350, EASE = "ease-in-out";
-const REVEAL = [{"--o":"1","--t":"0",easing:EASE},{"--o":"0","--t":"1"}];
-const COVER  = [{"--o":"0","--t":"1",easing:EASE},{"--o":"1","--t":"0"}];
-function fade(el, frames, delay, done){
-  if(el._anim) el._anim.cancel(); // un clic nuevo interrumpe el fundido anterior
-  const a = el._anim = el.animate(frames,{duration:DUR,delay,fill:"both"});
-  a.onfinish = ()=>{ done(); a.cancel(); el._anim = null; };
-}
-function settle(el, hidden){
-  if(el._anim){ el._anim.cancel(); el._anim = null; }
-  el.classList.toggle("hidden", hidden);
-}
+  /* Trayectoria: un camino que une las etapas y se pinta al hacer scroll */
+  .path { background:var(--ochre); padding-block:clamp(56px, 8vw, 96px); scroll-margin-top:0; overflow:hidden; }
+  .path h2 { margin-bottom:8px; }
+  .path-sub { margin:0 0 clamp(32px, 5vw, 56px); font:600 clamp(19px, 2.4vw, 26px)/1.3 "Bricolage Grotesque", sans-serif; letter-spacing:-.015em; }
+  .route { position:relative; }
+  .route-line { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+  .route-line path { fill:none; stroke-linecap:round; }
+  .road { stroke:color-mix(in srgb,var(--night) 40%,transparent); stroke-width:3; stroke-dasharray:2 11; }
+  .trail { stroke:var(--cobalt); stroke-width:6; }
+  .route ol { position:relative; list-style:none; margin:0; padding:0; }
+  .stage { display:grid; grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr); align-items:center; }
+  .stage + .stage { margin-top:-44px; }
+  .stage:nth-child(odd) .stage-card { grid-column:1; grid-row:1; transform:rotate(-.7deg); }
+  .stage:nth-child(even) .stage-card { grid-column:3; grid-row:1; transform:rotate(.7deg); }
+  .stage .stop { grid-column:2; grid-row:1; justify-self:center; }
+  .stage:nth-child(odd) .stop { margin-right:30px; }
+  .stage:nth-child(even) .stop { margin-left:30px; }
+  .stop { position:relative; z-index:1; display:grid; place-items:center; width:54px; height:54px; border-radius:50%; background:var(--card); color:var(--night); border:2px solid var(--night); transition:background .25s ease, color .25s ease, transform .25s cubic-bezier(.34,1.56,.64,1); }
+  .stop.passed { background:var(--cobalt); color:#fff; transform:scale(1.12); }
+  /* Destello al llegar: el círculo da un saltito y sale de él un anillo fino de luz */
+  .stop::after { content:""; position:absolute; inset:-2px; border-radius:50%; pointer-events:none; opacity:0; }
+  .stop.flash { animation:stop-pop .4s ease-out; }
+  .stop.flash::after { animation:stop-flash .6s ease-out; }
+  @keyframes stop-pop { 0% { transform:scale(1); } 45% { transform:scale(1.2); } 100% { transform:scale(1.12); } }
+  @keyframes stop-flash { 0% { opacity:.75; transform:scale(1); box-shadow:0 0 8px 2px rgba(255,255,255,.8); } 100% { opacity:0; transform:scale(1.7); box-shadow:0 0 10px 3px rgba(255,255,255,0); } }
+  .stop svg { width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .stage-card { background:var(--card); border:2px solid var(--night); border-radius:20px; padding:20px 22px; box-shadow:6px 6px 0 var(--night); display:flex; flex-direction:column; gap:4px; transition:transform .18s ease; }
+  .stage .stage-card:hover { transform:translate(-2px,-3px) rotate(0deg); }
+  .stage-when { font:800 clamp(24px, 3vw, 32px)/1.1 "Bricolage Grotesque", sans-serif; letter-spacing:-.025em; color:var(--cobalt); }
+  .stage-card h3 { font-size:19px; font-weight:700; letter-spacing:-.015em; line-height:1.25; margin-top:4px; }
+  .stage-card p { margin:0; font-size:15.5px; line-height:1.5; }
+  .stage-card .stage-role { font-weight:600; }
+  /* La última parada es hoy */
+  .stage:last-child .stage-card { background:var(--cobalt); color:#fff; }
+  .stage:last-child .stage-when { color:var(--ochre); }
+  .path-more { display:block; width:fit-content; margin:clamp(28px, 4vw, 44px) auto 0; font-weight:600; text-decoration-thickness:2px; text-underline-offset:4px; }
+  @media (max-width:820px) {
+    .stage { grid-template-columns:54px minmax(0,1fr); gap:14px; align-items:start; }
+    .stage + .stage { margin-top:22px; }
+    .stage:nth-child(n) .stop { grid-column:1; justify-self:start; margin:14px 0 0; }
+    .stage:nth-child(n) .stage-card { grid-column:2; transform:none; }
+  }
 
-function show(el, animate, delay=0){
-  el.removeAttribute("aria-hidden"); el.removeAttribute("title");
-  if(!animate || !canFade) return settle(el,false);
-  el.classList.remove("hidden");
-  fade(el, REVEAL, delay, ()=>{});
-}
-function hide(el, animate, delay=0){
-  el.setAttribute("aria-hidden","true");
-  el.title = HIDDEN[lang](NAMES[lang][el._t]);
-  if(!animate || !canFade) return settle(el,true);
-  fade(el, COVER, delay, ()=>el.classList.add("hidden"));
-}
+  /* Blog */
+  .head-row { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px; }
+  .head-row h2 { margin-bottom:0; }
+  .blog-sub { margin:8px 0 24px; color:var(--muted); }
+  .posts { list-style:none; margin:0; padding:0; border-top:2px solid var(--night); }
+  .posts li { border-bottom:2px solid var(--night); }
+  .posts a { display:flex; justify-content:space-between; align-items:baseline; gap:8px 24px; flex-wrap:wrap; padding:20px 4px; text-decoration:none; transition:padding .18s ease, background .18s ease; }
+  .posts a:hover { background:color-mix(in srgb,var(--ochre) 35%,transparent); padding-inline:16px; }
+  .p-title { font:700 clamp(19px, 2.4vw, 24px)/1.25 "Bricolage Grotesque", sans-serif; letter-spacing:-.015em; flex:1 1 320px; }
+  .posts time { font:500 13px/1 "Geist Mono", monospace; color:var(--muted); }
 
-function render(next, animate=true){
-  const prev = level; level = next;
-  fields.forEach(el=>{
-    const vis = el._t<=level, was = el._t<=prev;
-    if(!animate){ vis ? show(el,false) : hide(el,false); return; }
-    if(vis && !was) show(el, true);
-    else if(!vis && was) hide(el, true);
-  });
-  document.querySelectorAll(".tier").forEach(b=>b.setAttribute("aria-pressed", +b.dataset.lv===level));
-  document.body.classList.toggle("lv2", level===2);
-  const photo = document.querySelector(".photo"); if(photo) photo.classList.toggle("hidden", level<1);
-  const shown = fields.filter(f=>f._t<=level).length;
-  document.getElementById("bar").style.width = (shown/fields.length*100)+"%";
-  try{ history.replaceState(null,"", level ? "#"+LEVELS[level].id : location.pathname+location.search); }catch(e){}
-}
+  /* Contacto */
+  .contact { background:var(--cobalt); color:#fff; padding-block:clamp(64px, 9vw, 110px); }
+  .contact p { max-width:56ch; margin:0 0 26px; font-size:18px; }
+  .mail { display:inline-block; font:800 clamp(24px, 3vw, 36px)/1.1 "Bricolage Grotesque", sans-serif; letter-spacing:-.025em; color:var(--ochre); text-decoration-thickness:2px; text-underline-offset:6px; overflow-wrap:anywhere; }
+  .socials { display:flex; gap:20px; margin-top:26px; font-weight:600; }
 
-document.querySelectorAll(".tier").forEach(b=>b.addEventListener("click",()=>render(+b.dataset.lv)));
-addEventListener("hashchange",()=>{ const lv = ALIAS[location.hash.slice(1)]; if(lv!==undefined && lv!==level) render(lv); });
+  footer.wrap { padding-block:22px; font:400 12.5px/1.5 "Geist Mono", monospace; color:var(--muted); }
 
-// Al imprimir se muestra todo
-let beforePrint = 0;
-addEventListener("beforeprint",()=>{ beforePrint = level; render(2,false); });
-addEventListener("afterprint",()=>render(beforePrint,false));
+  /* En pantallas táctiles el hover se queda pegado tras pulsar */
+  @media (hover:none) {
+    .btn:hover, .btn-menu summary:hover { transform:none; box-shadow:none; }
+    .card:hover, .stage .stage-card:hover { transform:none; }
+    .posts a:hover { padding-inline:4px; background:none; }
+  }
 
-// Enlace directo a un nivel: #reclutador o #god
-const start = ALIAS[location.hash.slice(1)] ?? 0;
-render(0,false);
-if(start) setTimeout(()=>render(start),300);
-// Selector de idioma: ?lang=es en la URL, después la última elección; por defecto, inglés
-const staticTexts = [...document.querySelectorAll("[data-en]:not(.f)")];
-staticTexts.forEach(el=>{ el.dataset.es = el.textContent; });
-const langBtns = document.querySelectorAll("[data-lang-set]");
-function setLang(l){
-  lang = l;
-  document.documentElement.lang = l;
-  document.title = TITLE[l];
-  fields.forEach(el=>{
-    el._text = (l==="en" && el.dataset.en) || el._es;
-    el.innerHTML = markPh(el._text);
-    if(el.hasAttribute("aria-hidden")) el.title = HIDDEN[l](NAMES[l][el._t]);
-  });
-  staticTexts.forEach(el=>{ el.textContent = l==="en" ? el.dataset.en : el.dataset.es; });
-  const img = document.querySelector(".photo img"); if(img){ img.dataset.esAlt ??= img.alt; img.alt = l==="en" ? img.dataset.enAlt : img.dataset.esAlt; }
-  langBtns.forEach(b=>b.setAttribute("aria-pressed", b.dataset.langSet===l));
-  const blogLink = document.getElementById("blogLink"); if(blogLink) blogLink.href = l==="es" ? "/es/blog" : "/blog";
-  try{ localStorage.setItem("lang", l); }catch(e){}
-}
-langBtns.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.langSet)));
-let initLang = new URLSearchParams(location.search).get("lang");
-if(!initLang){ try{ initLang = localStorage.getItem("lang"); }catch(e){} }
-setLang(initLang==="es" ? "es" : "en");
+  /* Móvil: misma estructura con tamaños menores. La portada ocupa la pantalla y el banner queda en su borde inferior */
+  @media (max-width:640px) {
+    body { font-size:16px; line-height:1.55; }
+    .wrap { width:calc(100% - 32px); }
+    h2 { font-size:32px; margin-bottom:18px; }
+    section.wrap { padding-block:44px; }
 
-// Selector de tema (temporal)
-const themeBtns = document.querySelectorAll("[data-theme-set]");
-function setTheme(t){
-  document.documentElement.dataset.theme = t;
-  themeBtns.forEach(b=>b.setAttribute("aria-pressed", b.dataset.themeSet===t));
-}
-// El tema elegido se recuerda; si no hay elección previa, se sigue el del sistema
-themeBtns.forEach(b=>b.addEventListener("click",()=>{
-  setTheme(b.dataset.themeSet);
-  try{ localStorage.setItem("theme", b.dataset.themeSet); }catch(e){}
-}));
-let initTheme = null;
-try{ initTheme = localStorage.getItem("theme"); }catch(e){}
-if(initTheme!=="light" && initTheme!=="dark") initTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-setTheme(initTheme);
-</script>
-</body>
-</html>
+    /* Cabecera: el nombre comparte línea con el selector de idioma */
+    .top { gap:8px 0; padding-block:14px 6px; padding-right:0; }
+    .logo { font-size:18px; line-height:26px; }
+    .navlinks { width:100%; flex-wrap:nowrap; justify-content:space-between; gap:8px; font-size:clamp(11px, 3.5vw, 15px); }
+    .navlinks a { white-space:nowrap; }
+
+    /* Portada centrada: la foto, entera, se queda con el alto que dejan el texto y el banner */
+    .hero { display:flex; flex-direction:column; min-height:100vh; min-height:100svh; }
+    .hero-grid { flex:1; display:flex; flex-direction:column; justify-content:space-evenly; gap:0; padding-block:6px 14px; text-align:center; }
+    .hero-grid > div { display:flex; flex-direction:column; align-items:center; }
+    .sticker { font-size:13px; padding:5px 12px; }
+    h1 { font-size:clamp(30px, 11.4vw, 60px); margin:10px 0 2px; }
+    .role { font-size:clamp(16px, 4.6vw, 22px); margin:0 0 10px; }
+    .intro { max-width:none; margin:0 0 14px; font-size:16px; line-height:1.45; text-wrap:balance; }
+    .cta { align-self:stretch; flex-wrap:nowrap; gap:8px; }
+    .cta > * { flex:1 1 auto; }
+    .btn, .btn-menu summary { justify-content:center; font-size:clamp(12px, 4vw, 16px); padding:13px clamp(8px, 3vw, 16px); white-space:nowrap; }
+    .btn-menu summary { display:flex; }
+    .ticker { flex:none; }
+    .btn-menu summary { gap:5px; }
+    .btn-menu .cvmenu-list { left:50%; transform:translateX(-50%); min-width:210px; }
+
+    /* Banner: más tecnologías a la vista, a una velocidad parecida a la de escritorio */
+    .ticker { padding-block:9px; }
+    .ticker > div { font-size:11px; animation-duration:30s; }
+    .ticker span { padding-inline:5px; }
+    .ticker span::after { font-size:9px; margin-left:10px; }
+
+    /* Sobre mí */
+    .about { gap:22px; }
+    .about p { margin-bottom:12px; }
+    .about > img { border-radius:16px; box-shadow:6px 6px 0 var(--leaf); }
+    .pillars { margin-top:6px; gap:12px; }
+    .pillars li { padding:14px 16px; border-radius:16px; }
+    .pillars h3 { font-size:20px; margin-bottom:2px; }
+    .pillars p { font-size:16px; }
+
+    /* Proyectos */
+    .cards { gap:18px; }
+    .card { padding:18px; border-radius:16px; gap:8px; }
+    .card:nth-child(n) { box-shadow:5px 5px 0 var(--cobalt); }
+    .card:nth-child(2) { box-shadow:5px 5px 0 var(--rust); }
+    .card:nth-child(3) { box-shadow:5px 5px 0 var(--leaf); }
+    .card h3 { font-size:24px; }
+    .card p { font-size:16px; line-height:1.5; }
+
+    /* Trayectoria: círculos y tarjetas más pequeños para dar anchura al texto */
+    .path { padding-block:44px; }
+    .path-sub { font-size:17px; margin-bottom:26px; }
+    .stage { grid-template-columns:40px minmax(0,1fr); gap:10px; }
+    .stage + .stage { margin-top:16px; }
+    .stage:nth-child(n) .stop { margin-top:12px; }
+    .stop { width:40px; height:40px; }
+    .stop svg { width:20px; height:20px; }
+    .stage-card { padding:13px 15px; border-radius:16px; box-shadow:4px 4px 0 var(--night); }
+    .stage-when { font-size:21px; }
+    .stage-card h3 { font-size:18px; margin-top:2px; }
+    .stage-card p { font-size:15.5px; line-height:1.45; }
+
+    /* Blog y contacto */
+    .posts a { padding-block:14px; }
+    .p-title { font-size:17px; flex-basis:100%; }
+    .contact { padding-block:52px; }
+    .contact p { font-size:16px; margin-bottom:18px; }
+    .mail { font-size:clamp(20px, 5.8vw, 28px); text-underline-offset:5px; }
+    .socials { margin-top:20px; }
+  }
+
+  /* Figura recortada que sale del banner, rodeada de logos */
+  .hero-grid { align-items:end; padding-bottom:0; }
+  /* Escritorio: el relleno bajo el texto baja la figura y el banner sin mover el texto */
+  .hero-grid > div { align-self:start; padding-bottom:40px; }
+  @media (min-width:821px) {
+    .hero-grid { padding-top:calc(clamp(28px, 5vw, 64px) + 48px); } /* baja todo el contenido respecto al menú */
+    .hero-grid > div { padding-bottom:160px; }
+  }
+  .hero-photo { margin:0; position:relative; width:min(100%, 320px); justify-self:end; }
+  @media (min-width:1400px) { .hero-photo { margin-right:-40px; } } /* más separada del texto si hay sitio */
+  @media (max-width:1260px) { .hero-photo { margin-right:52px; } } /* sitio para los logos */
+  @media (max-width:820px) { .hero-photo { justify-self:center; margin-right:0; } }
+  .hero-photo > img { display:block; width:100%; height:auto; }
+  .badge { --size:70px; position:absolute; display:grid; place-items:center; width:var(--size); height:var(--size); padding:calc(var(--size) * .17); border-radius:50%; background:var(--card); border:2px solid var(--night); box-shadow:3px 3px 0 var(--ochre); }
+  .badge img { display:block; width:100%; height:100%; object-fit:contain; }
+  /* Ningún logo baja de la altura de las manos (62 % de la figura). Cada uno flota a su ritmo: la duración y el desfase distintos evitan que se muevan a la vez */
+  .badge { animation:badge-float var(--t) ease-in-out var(--d) infinite; }
+  .badge:nth-of-type(1) { left:-18%; top:6%; --r:-8deg; --t:5.2s; --d:0s; }
+  .badge:nth-of-type(2) { right:-8%; top:-4%; --r:7deg; --t:6.4s; --d:-2.1s; }
+  .badge:nth-of-type(3) { left:-32%; top:32%; --r:6deg; --t:5.8s; --d:-3.7s; }
+  .badge:nth-of-type(4) { right:-22%; top:22%; --r:-6deg; --t:7s; --d:-1.2s; padding:calc(var(--size) * .08); }
+  .badge:hover, .badge:focus-visible { animation-play-state:paused; } /* quieto para poder pulsarlo */
+  @keyframes badge-float { 0%, 100% { transform:translateY(0) rotate(var(--r)); } 50% { transform:translateY(-12px) rotate(calc(var(--r) + 5deg)); } }
+  @media (max-width:640px) {
+    /* El texto se centra en el alto libre; la figura queda apoyada en el banner */
+    .hero-grid { justify-content:flex-start; padding-block:0; }
+    .hero-grid > div { align-self:stretch; margin-block:auto; padding-block:8px; }
+    /* El alto manda y el ancho sale de la proporción de la foto: nunca se recorta. 483px: lo que ocupa el resto */
+    .hero-photo { flex:none; align-self:center; width:auto; aspect-ratio:810 / 1212; height:clamp(145px, calc(100vh - 483px), 290px); height:clamp(145px, calc(100svh - 483px), 290px); }
+    .hero-photo > img { height:100%; object-fit:cover; }
+    .badge { --size:clamp(39px, 11.2vw, 54px); box-shadow:2px 2px 0 var(--ochre); }
+    /* Cerca de la silueta sin pegarse: cada logo se coloca desde su borde más cercano a ella */
+    .badge:nth-of-type(1) { left:calc(10% - var(--size)); top:-2%; }
+    .badge:nth-of-type(2) { left:75%; top:-4%; }
+    .badge:nth-of-type(3) { left:calc(-8% - var(--size)); top:28%; }
+    .badge:nth-of-type(4) { left:106%; top:23%; }
+  }
+</style>

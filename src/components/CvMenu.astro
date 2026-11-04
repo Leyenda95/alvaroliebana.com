@@ -1,0 +1,41 @@
+---
+// Botón "CV": desplegable con el CV interactivo y el archivo PDF.
+// Los colores los pone cada variante con las variables --menu-*. El cierre lo gestiona LandingLayout.
+import T from './T.astro';
+import { cvMenu, cvPdf } from '../data/landing.js';
+const { class: className = '' } = Astro.props;
+---
+<details class:list={['cvmenu', className]}>
+  <summary>CV <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+  <div class="cvmenu-list">
+    <a href="/cv">
+      <T class="cvmenu-t" t={cvMenu.interactive} />
+      <T class="cvmenu-d" t={cvMenu.interactiveHint} />
+    </a>
+    {cvPdf ? (
+      <a href={cvPdf} target="_blank" rel="noopener">
+        <T class="cvmenu-t" t={cvMenu.pdf} />
+        <T class="cvmenu-d" t={cvMenu.pdfHint} />
+      </a>
+    ) : (
+      <span class="cvmenu-off" aria-disabled="true">
+        <T class="cvmenu-t" t={cvMenu.pdf} />
+        <T class="cvmenu-d" t={cvMenu.pdfSoon} />
+      </span>
+    )}
+  </div>
+</details>
+
+<style is:global>
+  .cvmenu { position:relative; display:inline-block; }
+  .cvmenu summary { list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .cvmenu summary::-webkit-details-marker { display:none; }
+  .cvmenu summary svg { transition:transform .2s ease; }
+  .cvmenu[open] summary svg { transform:rotate(180deg); }
+  .cvmenu-list { position:absolute; z-index:20; top:calc(100% + 8px); left:0; min-width:230px; display:flex; flex-direction:column; gap:2px; padding:6px; background:var(--menu-bg); color:var(--menu-ink); border:var(--menu-border); border-radius:var(--menu-radius, 12px); box-shadow:var(--menu-shadow); }
+  .cvmenu-list a, .cvmenu-off { display:flex; flex-direction:column; gap:2px; padding:10px 12px; border-radius:calc(var(--menu-radius, 12px) - 4px); text-decoration:none; color:inherit; text-align:left; }
+  .cvmenu-list a:hover, .cvmenu-list a:focus-visible { background:var(--menu-hover); }
+  .cvmenu-t { font-weight:600; font-size:15px; line-height:1.3; }
+  .cvmenu-d { font-size:13px; line-height:1.3; opacity:.7; }
+  .cvmenu-off { opacity:.55; cursor:not-allowed; }
+</style>

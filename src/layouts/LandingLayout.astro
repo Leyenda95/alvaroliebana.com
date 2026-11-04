@@ -1,0 +1,79 @@
+---
+// Base de la página de presentación: cabecera HTML, selectores de idioma y tema, y su comportamiento.
+// El idioma usa la misma clave de localStorage que el CV y el blog.
+import '../styles/tokens.css';
+const { fonts } = Astro.props;
+const description = 'Álvaro Liébana, ingeniero de producto en blockchain y privacidad. Valencia, España.';
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Álvaro Liébana</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href={fonts} />
+  <script is:inline>
+    // Los enlaces antiguos al CV (/#reclutador, /#god) siguen llevando al CV
+    if (['#publico', '#reclutador', '#god', '#godmode'].includes(location.hash)) {
+      location.replace('/cv' + location.search + location.hash);
+    }
+  </script>
+</head>
+<body>
+  <div class="ctrl">
+    <span role="group" aria-label="Idioma / Language">
+      <button data-lang-set="es">ES</button>
+      <button data-lang-set="en">EN</button>
+    </span>
+  </div>
+
+  <slot />
+
+  <script is:inline>
+    // Idioma: ?lang= en la URL, después la última elección; por defecto, inglés (igual que el CV)
+    const translated = [...document.querySelectorAll('[data-en]')];
+    translated.forEach((el) => { el.dataset.es = el.textContent; });
+    const altImgs = [...document.querySelectorAll('img[data-en-alt]')];
+    altImgs.forEach((img) => { img.dataset.esAlt = img.alt; });
+    const langBtns = document.querySelectorAll('[data-lang-set]');
+    function setLang(l) {
+      document.documentElement.lang = l;
+      translated.forEach((el) => { el.textContent = l === 'en' ? el.dataset.en : el.dataset.es; });
+      altImgs.forEach((img) => { img.alt = l === 'en' ? img.dataset.enAlt : img.dataset.esAlt; });
+      document.querySelectorAll('[data-href-es]').forEach((a) => { a.href = l === 'es' ? a.dataset.hrefEs : a.dataset.hrefEn; });
+      document.querySelectorAll('a[href^="/cv"]').forEach((a) => { a.href = '/cv?lang=' + l; });
+      langBtns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.langSet === l));
+      try { localStorage.setItem('lang', l); } catch (e) {}
+    }
+    langBtns.forEach((b) => b.addEventListener('click', () => setLang(b.dataset.langSet)));
+    let initLang = new URLSearchParams(location.search).get('lang');
+    if (!initLang) { try { initLang = localStorage.getItem('lang'); } catch (e) {} }
+    setLang(initLang === 'es' ? 'es' : 'en');
+
+    // Desplegable del CV: se cierra al pulsar fuera o con Escape
+    const menus = document.querySelectorAll('.cvmenu');
+    document.addEventListener('click', (e) => menus.forEach((m) => { if (!m.contains(e.target)) m.open = false; }));
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      menus.forEach((m) => { if (m.open) { m.open = false; m.querySelector('summary').focus(); } });
+    });
+  </script>
+</body>
+</html>
+
+<style is:global>
+  html { scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+  .ctrl { position:fixed; top:16px; right:16px; z-index:30; display:flex; align-items:center; gap:2px; padding:3px; border:1px solid var(--line); border-radius:10px; background:color-mix(in srgb,var(--surface) 85%,transparent); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .ctrl > span[role] { display:contents; }
+  .ctrl button { appearance:none; font:500 12px/1 var(--f-mono); color:var(--muted); background:transparent; border:0; border-radius:7px; padding:7px 10px; cursor:pointer; }
+  .ctrl button[aria-pressed="true"] { background:var(--surface); color:var(--ink); box-shadow:var(--shadow); }
+  .ctrl button:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  @media (max-width:640px) {
+    .ctrl { position:absolute; top:10px; right:16px; }
+    .ctrl button { padding:6px 9px; font-size:11.5px; }
+  }
+</style>

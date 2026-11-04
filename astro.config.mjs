@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
-// El CV interactivo es la página principal (src/pages/index.astro).
+// La página de presentación está en / (src/pages/index.astro) y el CV interactivo en /cv (src/pages/cv.astro).
 // El blog se genera en /blog (inglés) y /es/blog (español).
 export default defineConfig({
   site: 'https://alvaroliebana.com',

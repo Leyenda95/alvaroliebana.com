@@ -6,7 +6,7 @@ const sorted = [...posts].sort((a, b) => +new Date(b.frontmatter.date) - +new Da
 const fmt = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 const t = {
   en: { title: 'Blog', intro: 'Notes on privacy, blockchain and building products.', empty: 'No posts yet.' },
-  es: { title: 'Blog', intro: 'Notas sobre privacidad, blockchain y construcción de producto.', empty: 'Todavía no hay artículos.' },
+  es: { title: 'Blog', intro: 'Notas sobre privacidad, blockchain y creación de productos.', empty: 'Todavía no hay artículos.' },
 }[lang];
 ---
 <section>
@@ -27,14 +27,14 @@ const t = {
 </section>
 
 <style>
-  h1 { font:600 clamp(32px,6vw,44px)/1.1 var(--f-sans); letter-spacing:-.04em; margin:0; }
-  .intro { color:var(--muted); margin:10px 0 0; }
-  ul { list-style:none; padding:0; margin:32px 0 0; display:flex; flex-direction:column; }
-  li + li { border-top:1px solid var(--line); }
-  li a { display:grid; grid-template-columns:110px minmax(0,1fr); gap:2px 20px; padding:18px 0; text-decoration:none; }
-  time { font:400 13px/1.7 var(--f-mono); color:var(--muted); grid-row:span 2; }
-  .t { font-weight:600; font-size:18px; letter-spacing:-.015em; }
+  h1 { font:800 clamp(44px,8vw,68px)/1 var(--f-display); letter-spacing:-.03em; margin:0; }
+  .intro { color:var(--muted); margin:12px 0 0; }
+  ul { list-style:none; padding:0; margin:32px 0 0; display:flex; flex-direction:column; border-top:2px solid var(--ink); }
+  li { border-bottom:2px solid var(--ink); }
+  li a { display:grid; grid-template-columns:110px minmax(0,1fr); gap:4px 20px; padding:20px 0; text-decoration:none; }
+  time { font:400 13px/1.9 var(--f-mono); color:var(--muted); grid-row:span 2; }
+  .t { font:700 22px/1.25 var(--f-display); letter-spacing:-.015em; }
   li a:hover .t { color:var(--accent); }
-  .d { color:var(--muted); font-size:15px; }
-  @media (max-width:560px) { li a { grid-template-columns:minmax(0,1fr); } time { grid-row:auto; } }
+  .d { color:var(--muted); font-size:15.5px; line-height:1.55; }
+  @media (max-width:560px) { li a { grid-template-columns:minmax(0,1fr); } time { grid-row:auto; } .t { font-size:20px; } }
 </style>

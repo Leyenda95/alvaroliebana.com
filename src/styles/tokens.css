@@ -1,22 +1,23 @@
-/* Estilos comunes del CV y del blog: reset, colores de los modos claro y oscuro, tipografías */
+/* Estilos comunes del CV y del blog: reset, colores de los modos claro y oscuro, tipografías.
+   La paleta y las fuentes son las de la portada; su modo oscuro es un azul noche con el ocre como acento */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 [hidden]{display:none!important}
 :root{
-  --bg:#f9f9f8; --surface:#ffffff; --ink:#0a0a0b; --muted:#71717a; --faint:#a1a1aa; --line:#d8d8dc; --divider:#c4c4ca;
-  --accent:#6555ce; --god:#c2410c;  --redact:color-mix(in srgb,var(--ink) 15%,transparent); --ph:#7c3aed;
-  --dot:rgba(10,10,11,.10); --shadow:0 1px 2px rgba(0,0,0,.06),0 1px 1px rgba(0,0,0,.04);
-  --f-sans:"Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bg:#f7f1e5; --surface:#fffdf8; --ink:#10204a; --muted:#55608a; --faint:#6b7596; --line:#d9cfb9; --divider:#c9bea4;
+  --accent:#123f9c; --god:#c9562c; --redact:color-mix(in srgb,var(--ink) 15%,transparent); --ph:#c9562c; --band:#123f9c;
+  --dot:rgba(16,32,74,.10); --shadow:0 1px 2px rgba(16,32,74,.12),0 1px 1px rgba(16,32,74,.06);
+  --f-display:"Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-sans:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono:"Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --f-serif:"Instrument Serif", "Times New Roman", serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0e0e11; --surface:#18181c; --ink:#fafafa; --muted:#a1a1aa; --faint:#71717a; --line:#27272a; --divider:#3a3a41;
-  --accent:#a69ce2; --god:#fb923c;  --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#c4b5fd;
-  --dot:rgba(255,255,255,.09); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}}
+  --bg:#0b1530; --surface:#132145; --ink:#f7f1e5; --muted:#a8b3d4; --faint:#7d8ab0; --line:#26375f; --divider:#374a7a;
+  --accent:#e8b04a; --god:#f08a5d; --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#e8b04a; --band:#132c6b;
+  --dot:rgba(247,241,229,.08); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0e0e11; --surface:#18181c; --ink:#fafafa; --muted:#a1a1aa; --faint:#71717a; --line:#27272a; --divider:#3a3a41;
-  --accent:#a69ce2; --god:#fb923c;  --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#c4b5fd;
-  --dot:rgba(255,255,255,.09); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}
+  --bg:#0b1530; --surface:#132145; --ink:#f7f1e5; --muted:#a8b3d4; --faint:#7d8ab0; --line:#26375f; --divider:#374a7a;
+  --accent:#e8b04a; --god:#f08a5d; --redact:color-mix(in srgb,var(--ink) 20%,transparent); --ph:#e8b04a; --band:#132c6b;
+  --dot:rgba(247,241,229,.08); --shadow:0 1px 2px rgba(0,0,0,.5); color-scheme:dark}
 ::selection{background:color-mix(in srgb,var(--accent) 25%,transparent)}
