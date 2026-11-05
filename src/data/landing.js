@@ -3,8 +3,8 @@
 
 import { readdirSync, readFileSync } from 'node:fs';
 
-// Cuando esté el PDF: déjalo en public/ y pon aquí su ruta, por ejemplo '/alvaro-liebana-cv.pdf'.
-export const cvPdf = null;
+// CV en PDF, en public/. La ruta no puede empezar por /cv: LandingLayout convierte esos enlaces en el CV interactivo.
+export const cvPdf = { es: '/alvaro-liebana-cv-es.pdf', en: '/alvaro-liebana-cv-en.pdf' };
 
 export const links = {
   email: 'alvaro@tricubo.tech',
@@ -18,7 +18,6 @@ export const nav = [
   { href: '#work', label: ['Proyectos', 'Work'] },
   { href: '#path', label: ['Trayectoria', 'Path'] },
   { href: '#blog', label: ['Blog', 'Blog'] },
-  { href: '#contact', label: ['Contacto', 'Contact'] },
 ];
 
 export const hero = {
@@ -36,8 +35,7 @@ export const cvMenu = {
   interactive: ['CV interactivo', 'Interactive CV'],
   interactiveHint: ['Tú eliges qué ver', 'You choose what to see'],
   pdf: ['Archivo PDF', 'PDF file'],
-  pdfHint: ['Para descargar', 'To download'],
-  pdfSoon: ['Próximamente', 'Coming soon'],
+  pdfHint: ['Elige el idioma', 'Choose a language'],
 };
 
 export const about = {
@@ -56,8 +54,8 @@ export const about = {
     {
       title: ['Privacidad', 'Privacy'],
       text: [
-        'Pruebas de conocimiento cero y contratos en Compact sobre Midnight.',
-        'Zero-knowledge proofs and Compact contracts on Midnight.',
+        'Pruebas de conocimiento cero y divulgación selectiva sobre Midnight.',
+        'Zero-knowledge proofs and selective disclosure on Midnight.',
       ],
     },
     {
@@ -70,8 +68,8 @@ export const about = {
     {
       title: ['IA', 'AI'],
       text: [
-        'Agentes en el flujo de desarrollo, con el código validado por tests y CI.',
-        'Agents in the development workflow, with the code validated by tests and CI.',
+        'Agentes en el flujo de desarrollo, con tests y quality gates en CI.',
+        'Agents in the development workflow, with tests and CI quality gates.',
       ],
     },
   ],
