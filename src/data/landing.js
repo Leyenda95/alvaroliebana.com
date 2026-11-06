@@ -86,8 +86,9 @@ export const work = {
         'Inteligencia de mercado colectiva para el pequeño comercio, sin rastrear a nadie. Diseñé la capa de privacidad en Compact, sobre Midnight: cada compra se demuestra con pruebas de conocimiento cero.',
         'Collective market intelligence for small retailers, without tracking anyone. I designed the privacy layer in Compact, on Midnight: each purchase is proven with zero-knowledge proofs.',
       ],
-      tags: ['Midnight', 'Compact', 'ZK'],
+      tags: ['Midnight', ['Privacidad', 'Privacy'], 'Retail'],
       link: { href: links.trailer, label: ['Ver el tráiler', 'Watch the trailer'] },
+      site: { href: 'https://aegis-midnight.vercel.app/', label: ['Web', 'Website'] },
     },
     {
       name: 'Project Catalyst',
@@ -97,7 +98,7 @@ export const work = {
         'Evaluación de propuestas de financiación del ecosistema Cardano según su viabilidad técnica, presupuesto e impacto.',
         'Assessing Cardano ecosystem funding proposals on technical feasibility, budget and impact.',
       ],
-      tags: ['Cardano'],
+      tags: ['Cardano', ['Evaluación técnica', 'Technical review']],
     },
     {
       name: 'Zunibal',

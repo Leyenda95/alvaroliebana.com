@@ -11,7 +11,7 @@ const description = 'Álvaro Liébana, ingeniero de producto en blockchain y pri
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Álvaro Liébana</title>
-  <link rel="icon" href="/favicon.ico?v=1" sizes="any" />
+  <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
   <meta name="description" content={description} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -68,7 +68,8 @@ const description = 'Álvaro Liébana, ingeniero de producto en blockchain y pri
       }
       // Se abre hacia arriba si, con los idiomas desplegados, no cabe debajo y arriba hay más sitio
       const button = m.querySelector('summary').getBoundingClientRect();
-      const needed = m.querySelector('.cvmenu-list').offsetHeight + 52; // 52: idiomas y separación
+      const extra = m.querySelector('.cvmenu-row') ? 52 : 8; // separación, más los idiomas si aún están por desplegar
+      const needed = m.querySelector('.cvmenu-list').offsetHeight + extra;
       const below = innerHeight - button.bottom;
       m.classList.toggle('up', needed > below && button.top > below);
     }));

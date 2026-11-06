@@ -27,14 +27,14 @@ const t = {
 </section>
 
 <style>
-  h1 { font:800 clamp(44px,8vw,68px)/1 var(--f-display); letter-spacing:-.03em; margin:0; }
+  h1 { font:500 clamp(44px,8vw,68px)/1 var(--f-display); letter-spacing:-.03em; margin:0; }
   .intro { color:var(--muted); margin:12px 0 0; }
-  ul { list-style:none; padding:0; margin:32px 0 0; display:flex; flex-direction:column; border-top:2px solid var(--ink); }
-  li { border-bottom:2px solid var(--ink); }
+  ul { list-style:none; padding:0; margin:32px 0 0; display:flex; flex-direction:column; border-top:1px solid var(--divider); }
+  li { border-bottom:1px solid var(--divider); }
   li a { display:grid; grid-template-columns:110px minmax(0,1fr); gap:4px 20px; padding:20px 0; text-decoration:none; }
   time { font:400 13px/1.9 var(--f-mono); color:var(--muted); grid-row:span 2; }
-  .t { font:700 22px/1.25 var(--f-display); letter-spacing:-.015em; }
-  li a:hover .t { color:var(--accent); }
+  .t { font:500 22px/1.25 var(--f-display); letter-spacing:-.015em; }
+  li a:hover .t { color:var(--warm); }
   .d { color:var(--muted); font-size:15.5px; line-height:1.55; }
   @media (max-width:560px) { li a { grid-template-columns:minmax(0,1fr); } time { grid-row:auto; } .t { font-size:20px; } }
 </style>

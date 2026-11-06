@@ -1,7 +1,7 @@
 ---
 // CV interactivo: misma página que antes (public/index.html), ahora generada por Astro.
-// El HTML y el script son los de siempre; los colores y modos vienen de src/styles/tokens.css.
-import '../styles/tokens.css';
+// El HTML y el script son los de siempre; los colores y modos vienen de src/styles/tokens-cv.css.
+import '../styles/tokens-cv.css';
 ---
 <!doctype html>
 <html lang="es">
@@ -10,7 +10,7 @@ import '../styles/tokens.css';
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="CV de Álvaro con divulgación selectiva.">
 <title>Álvaro · Currículum</title>
-<link rel="icon" href="/favicon.ico?v=1" sizes="any">
+<link rel="icon" href="/favicon.ico?v=2" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
@@ -34,9 +34,9 @@ header{display:flex;flex-direction:column;gap:22px}
 @media (max-width:560px){.hero{flex-direction:column-reverse;align-items:flex-start}.photo{width:160px;border-radius:22px}}
 @media print{.photo.hidden img{filter:none;transform:none;opacity:1}}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 12px/1 var(--f-mono);color:var(--muted)}
-.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--melocoton);box-shadow:0 0 0 3px color-mix(in srgb,var(--melocoton) 20%,transparent)}
 h1{font:800 clamp(40px,7.5vw,64px)/1.1 var(--f-display);letter-spacing:-.03em;margin:0;text-wrap:balance}
-h1 em{font:500 1em/1.1 var(--f-display);letter-spacing:-.03em;color:var(--accent)}
+h1 em{font:500 1em/1.1 var(--f-display);letter-spacing:-.03em;color:var(--melocoton)}
 /* En el nombre la barra es algo más baja que la línea, para que no se solape si ocupa dos líneas */
 h1 .f{background:linear-gradient(var(--bar-h1),var(--bar-h1)) center/100% 78% no-repeat;--bar-h1:color-mix(in srgb,var(--redact) calc(var(--o)*100%),transparent)}
 .headline{font-size:18px;line-height:1.5;color:var(--muted);max-width:52ch;margin:0;text-wrap:pretty}
@@ -60,10 +60,12 @@ a:has(.f.hidden){pointer-events:none;text-decoration-color:transparent} /* ocult
 .tier .t{font-weight:600;font-size:14.5px;letter-spacing:-.01em}
 .tier .d{font-size:12.5px;color:var(--muted);line-height:1.35}
 .tier[aria-pressed="true"]{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow)}
-.tier[aria-pressed="true"] .t{color:var(--accent)}
+.tier[aria-pressed="true"] .t{color:var(--tier)}
+.tier[data-lv="1"][aria-pressed="true"] .t{color:var(--tier1)}
 .tier.god[aria-pressed="true"] .t{color:var(--god)}
 .bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .6s cubic-bezier(.65,0,.35,1),background .3s}
+body.lv1 .bar i{background:var(--bar1)}
 body.lv2 .bar i{background:var(--god)}
 
 /* Secciones */
@@ -237,7 +239,7 @@ footer{border-top:1px solid var(--divider);padding-top:18px;font:400 12px/1.6 va
     </div>
     <dl class="kv">
       <dt><span class="f" data-t="0" data-en="Cryptography">Criptografía</span></dt><dd><span class="f" data-t="0" data-en="Zero-knowledge proofs, selective disclosure and end-to-end encryption.">Pruebas de conocimiento cero, divulgación selectiva y cifrado de extremo a extremo.</span></dd>
-      <dt><span class="f" data-t="0" data-en="AI">IA</span></dt><dd><span class="f" data-t="0" data-en="AI agents in the development workflow, with the code validated by tests and CI quality gates (coverage thresholds, mutation testing).">Agentes de IA en el flujo de desarrollo, con el código validado por tests y quality gates en CI (umbrales de cobertura, mutation testing).</span></dd>
+      <dt><span class="f" data-t="0" data-en="AI">IA</span></dt><dd><span class="f" data-t="0" data-en="AI agents in the development workflow, with tests and CI quality gates (coverage thresholds, mutation testing).">Agentes de IA en el flujo de desarrollo, con tests y quality gates en CI (umbrales de cobertura, mutation testing).</span></dd>
       <dt><span class="f" data-t="0" data-en="Tools">Herramientas</span></dt><dd><span class="f" data-t="0">GitHub, Notion, ClickUp</span></dd>
       <dt><span class="f" data-t="0" data-en="Learning">Aprendiendo</span></dt><dd><span class="f" data-t="0">Go</span></dd>
     </dl>
@@ -337,6 +339,7 @@ function render(next, animate=true){
     else if(!vis && was) hide(el, true);
   });
   document.querySelectorAll(".tier").forEach(b=>b.setAttribute("aria-pressed", +b.dataset.lv===level));
+  document.body.classList.toggle("lv1", level===1);
   document.body.classList.toggle("lv2", level===2);
   const photo = document.querySelector(".photo"); if(photo) photo.classList.toggle("hidden", level<1);
   const shown = fields.filter(f=>f._t<=level).length;
